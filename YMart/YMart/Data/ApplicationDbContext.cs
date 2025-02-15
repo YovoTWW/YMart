@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using YMart.Data.Models;
 
 namespace YMart.Data
 {
@@ -9,5 +10,14 @@ namespace YMart.Data
             : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Cart> Carts { get; set; }
     }
 }
