@@ -17,9 +17,19 @@ namespace YMart.Controllers
             this.dbContext = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+           
+            var model = await dbContext.Products.Where(p => p.IsDeleted == false)
+                .Select(p => new BasicProductViewModel()
+                {
+                    ImageURL = p.ImageURL,
+                    Name = p.Name,
+                    Price = p.Price,                    
+                }).AsNoTracking().ToListAsync();
+
+            return this.View(model);
         }
 
         [HttpGet]

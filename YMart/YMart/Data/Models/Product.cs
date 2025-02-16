@@ -29,5 +29,7 @@ namespace YMart.Data.Models
 
         [Required]
         public string ImageURL { get; set; }
+
+        public bool IsDeleted {  get; set; }
     }
 }
