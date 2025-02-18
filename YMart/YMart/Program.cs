@@ -19,7 +19,7 @@ namespace YMart
             builder.Services.AddDefaultIdentity<IdentityUser>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequireDigit = true;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireNonAlphanumeric = false ;
                 options.Password.RequireUppercase = true;
             })
                 .AddRoles<IdentityRole>()

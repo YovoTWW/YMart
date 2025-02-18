@@ -18,3 +18,39 @@
 </div>
 <hr />
 
+<div class="Product-Row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100" style="width: 100%;">
+                @if (!string.IsNullOrEmpty(product.ImageURL))
+                {
+                    <img src="@product.ImageURL" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="@product.Name">
+                }
+                else
+                {
+                    <img src="~/img/no-image-available-02.jpg" class="card-img-top" style="max-height: 150px; object-fit: contain;" alt="No Image Available">
+                }
+
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
+                    <div class="d-flex justify-content-between mt-auto">
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info me-2 w-50">Details</a>
+                            <form asp-controller="Product" asp-action="AddToCart" method="post" class="w-50">
+                                <input type="hidden" name="id" value="@product.Id" />
+                                <button type="submit" class="btn btn-success w-100">Buy</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info w-100">Details</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
