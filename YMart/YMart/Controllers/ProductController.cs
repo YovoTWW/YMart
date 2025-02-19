@@ -24,6 +24,7 @@ namespace YMart.Controllers
             var model = await dbContext.Products.Where(p => p.IsDeleted == false)
                 .Select(p => new BasicProductViewModel()
                 {
+                    Id = p.Id,
                     ImageURL = p.ImageURL,
                     Name = p.Name,
                     Price = p.Price,                    
@@ -68,6 +69,77 @@ namespace YMart.Controllers
             await dbContext.SaveChangesAsync();
 
             return this.RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new DetailedProductViewModel
+            {
+                Id = p.Id,
+                Description = p.Description,
+                Category = p.Category,
+                ImageURL = p.ImageURL,                
+                Name = p.Name,               
+                Price = p.Price,
+                Quantity= p.Quantity
+            }).FirstOrDefaultAsync();
+
+
+            return this.View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new EditProductViewModel
+            {
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                ImageURL = p.ImageURL,
+                Category = p.Category,
+                Quantity = p.Quantity
+            }).FirstOrDefaultAsync();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel model, Guid id)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+
+            if (model.Price < MinPrice || model.Price > MaxPrice)
+            {
+                ModelState.AddModelError(nameof(model.Price), $"Price must be between {MinPrice}€ and {MaxPrice}€");
+                return this.View(model);
+            }
+
+            Product? entity = await dbContext.Products.FindAsync(id);
+
+            if (entity == null || entity.IsDeleted)
+            {
+                throw new ArgumentException("Invalid id");
+            }
+            
+
+
+            entity.Name = model.Name;
+            entity.Description = model.Description;
+            entity.Price = model.Price;
+            entity.ImageURL = model.ImageURL;
+            entity.Category = model.Category;
+            entity.Quantity = model.Quantity;
+
+            await this.dbContext.SaveChangesAsync();
+
+            //return RedirectToAction("Index");
+            return RedirectToAction("Details", new { id = id });
         }
     }
 }
