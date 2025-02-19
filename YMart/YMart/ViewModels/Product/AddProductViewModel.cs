@@ -1,12 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static YMart.Constants.CategoryList;
 
 namespace YMart.ViewModels.Product
 {
     public class AddProductViewModel
     {
-        public string Id { get; set; } = null!;
-
-
         public string Name { get; set; } = null!;
 
 
@@ -23,5 +21,7 @@ namespace YMart.ViewModels.Product
 
 
         public string ImageURL { get; set; } = null!;
+
+        public List<string> CategoriesList { get; set; } = Categories;
     }
 }
