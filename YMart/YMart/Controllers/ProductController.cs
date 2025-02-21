@@ -109,14 +109,14 @@ namespace YMart.Controllers
         public async Task<IActionResult> Edit(EditProductViewModel model, Guid id)
         {
             if (!this.ModelState.IsValid)
-            {
+            {             
                 return this.View(model);
             }
-
-
+           
             if (model.Price < MinPrice || model.Price > MaxPrice)
             {
                 ModelState.AddModelError(nameof(model.Price), $"Price must be between {MinPrice}€ and {MaxPrice}€");
+
                 return this.View(model);
             }
 
@@ -126,13 +126,12 @@ namespace YMart.Controllers
             {
                 throw new ArgumentException("Invalid id");
             }
-            
 
-
+            //entity.Id = id;
             entity.Name = model.Name;
             entity.Description = model.Description;
             entity.Price = model.Price;
-            entity.ImageURL = model.ImageURL;
+            entity.ImageURL = model.ImageURL;            
             entity.Category = model.Category;
             entity.Quantity = model.Quantity;
 
