@@ -140,5 +140,62 @@ namespace YMart.Controllers
             //return RedirectToAction("Index");
             return RedirectToAction("Details", new { id = id });
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> SoftDelete(Guid id)
+        {
+            var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new DeleteProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).FirstOrDefaultAsync();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SoftDelete(DeleteProductViewModel model)
+        {
+            Product? product = await dbContext.Products.Where(p => p.Id == model.Id).Where(p => p.IsDeleted == false).FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+
+                product.IsDeleted = true;
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return this.RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> HardDelete(Guid id)
+        {
+            var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new DeleteProductViewModel
+            {
+                Id = p.Id,
+                Name = p.Name
+            }).FirstOrDefaultAsync();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> HardDelete(DeleteProductViewModel model)
+        {
+            Product? product = await dbContext.Products.Where(p => p.Id == model.Id).FirstOrDefaultAsync();
+
+            if (product != null)
+            {
+
+                dbContext.Products.Remove(product);
+
+                await dbContext.SaveChangesAsync();
+            }
+
+            return this.RedirectToAction("Index");
+        }
     }
 }
