@@ -7,6 +7,7 @@ namespace YMart.Data.Models
         public Product()
         {
             this.Id = Guid.NewGuid();
+            this.Carts = new List<Cart>();
         }
 
         [Key]
@@ -31,5 +32,7 @@ namespace YMart.Data.Models
         public string ImageURL { get; set; }
 
         public bool IsDeleted {  get; set; }
+
+        public List<Cart> Carts { get; set; } 
     }
 }
