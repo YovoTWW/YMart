@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Not Signed In";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">You must be signed in to buy products or add them to your Cart</h1>
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    
+</div>

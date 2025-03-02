@@ -3,7 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - YMart</title>
+    @{
+        ViewData["Title"] = "YMart";
+    }
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/YMart.styles.css" asp-append-version="true" />
@@ -31,10 +34,17 @@
         font-size:50px;
         text-decoration:none;
     }
+
+
 </style>
 
 
+
 <body>
+@{
+        string ControllerName = "Home";
+        string ActionName = "NotSignedIn";
+}
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
@@ -56,9 +66,11 @@
                         </li>
                     </ul>
                     @if (User?.Identity?.IsAuthenticated ?? false)
-                    {                  
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Cart"> <i class="bi bi-cart" id="Cart-Button"></i></a>                   
-                    }               
+                    {                     
+                            ControllerName = "Product";
+                            ActionName = "Cart";                 
+                    }                            
+                        <a class="nav-link text-dark" asp-area="" asp-controller="@ControllerName" asp-action="@ActionName"> <i class="bi bi-cart" id="Cart-Button"></i></a>                
                     <partial name="_LoginPartial" />
                 </div>
             </div>
