@@ -11,6 +11,20 @@
         margin:20px;
     }
 
+    .User-Buttons{
+        flex-grow:1;
+        background:lightblue;
+        margin-left:10px;
+        margin-right:10px;
+        display:flex;
+        padding:1.5em 1em 1.5em 1em;
+    }
+
+    .User-Buttons>*{
+        flex-grow:1;
+        gap:0.5rem;
+    }
+
 </style>
 
 <div class="Top-Text">
@@ -46,7 +60,8 @@
                         }
                         else
                         {
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="btn btn-info w-100">Details</a>
+                            <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons">Details</a>
+                            <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons"><i class="bi bi-cart"></i>Add to Cart</a>
                         }
                     </div>
                 </div>
