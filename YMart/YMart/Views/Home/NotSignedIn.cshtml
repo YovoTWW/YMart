@@ -2,13 +2,34 @@
     ViewData["Title"] = "Not Signed In";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+<style>
+    .Top{
+        display:flex;
+        justify-content:center;
+    }
+
+    .text-center{
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        gap:1em;
+    }
+
+    .User-Buttons{
+        padding:2em 1.5em 2em 1.5em;
+        background:lightblue; 
+        max-width:30%;
+        margin:0 auto;
+    }
+</style>
+
+<div class="Top">
     <h2>@ViewData["Title"]</h2>
 </div>
 
 <div class="text-center">
     <h1 class="display-4">You must be signed in to buy products or add them to your Cart</h1>
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
-    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    
+    <a class="User-Buttons" asp-area="Identity" asp-page="/Account/Login">Sign in</a>
+    <a class="User-Buttons" asp-area="Identity" asp-page="/Account/Register">Register</a>
 </div>
+
