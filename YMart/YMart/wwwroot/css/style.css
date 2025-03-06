@@ -1,0 +1,59 @@
+﻿.Top-Text {
+    margin: 20px;
+}
+
+.User-Buttons {
+    flex: 1 1 auto;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    background: linear-gradient(#0000, rgb(0 0 0/15%)) top/100% 800%;
+    transition: 0.25s;
+}
+
+    .User-Buttons:hover {
+        background-position: bottom;
+    }
+
+#cyan {
+    color: black;
+    background-color: #0dcaf0;
+    border-color: #0dcaf0;
+}
+
+#green {
+    color: white;
+    background-color: #198754;
+    border: none;
+    display: block;
+    width: 100%;
+}
+
+#green-a {
+    color: white;
+    background-color: #198754;
+    border-color :#198754 ;
+}
+
+#yellow {
+    color: black;
+    background-color: #ffca2c;
+    border-color: #ffc720;
+}
+
+.Buttons-Div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+}
+
+form {
+    flex: 1 1 auto;
+}

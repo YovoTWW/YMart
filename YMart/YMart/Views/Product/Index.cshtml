@@ -6,47 +6,10 @@
     ViewData["Title"] = "Products List";
 }
 
-<style>
-    .Top-Text{
-        margin:20px;
-    }
 
-    .User-Buttons{
-        flex: 1 1 auto;
-        margin-left:0.25rem;
-        margin-right:0.25rem;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding-top:10px;
-        padding-bottom:10px;
-        text-decoration:none;
-        border-radius:0.25rem;
-    }
+<link rel="stylesheet" href ="~/css/style.css" />
 
 
-    #cyan{
-        color:black;
-        background-color: #0dcaf0;
-        border-color: #0dcaf0;
-    }
-
-    #green{
-        color: white;
-        background-color: #198754;
-        border-color: #198754;
-        
-       
-    }
-
-    .Buttons-Div{
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        text-align:center;
-    }
-
-</style>
 
 <div class="Top-Text">
     <h2>@ViewData["Title"]</h2>
@@ -81,7 +44,7 @@
                         }
                         else
                         {                        
-                            <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons" id="green"><i class="bi bi-cart"></i>Add to Cart</a>
+                            <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons" id="green-a"><i class="bi bi-cart"></i>Add to Cart</a>
                         }
                     </div>
                 </div>
