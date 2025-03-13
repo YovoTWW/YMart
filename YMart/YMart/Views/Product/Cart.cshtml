@@ -10,26 +10,70 @@
 </div>
 <hr />
 
+<style>
+    .Product-Section{
+        display:flex;
+        flex-direction:row;
+        padding-top:1rem;
+        padding-bottom:1rem;
+        margin-bottom:1.5rem;
+        align-items:center;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .Image-Container{
+        text-align:center;
+        flex-grow:2;
+    }
+
+    .Image-Container img{
+        max-width:100%;
+        height:auto;
+        max-height:100px;
+        object-fit: contain;
+    }
+
+    .Product-Name{
+        flex-grow:4;
+        text-align:left;
+    }
+
+    .Product-Price{
+        flex-grow:2;
+        text-align:left;
+    }
+
+    .Product-Name h5, .Product-Price h5{
+        margin-bottom:0 ;
+    }
+
+    .RFC-Button{
+        flex-grow:4;
+        text-align:right;
+    }
+
+</style>
+
 @foreach (var product in Model)
 {
-    <div class="row align-items-center mb-4 py-3" style="border-bottom: 1px solid #ccc;">
-        <div class="col-md-2 text-center">
+    <div class="Product-Section">
+        <div class="Image-Container">
             @if (!string.IsNullOrEmpty(product.ImageURL))
             {
-                <img src="@product.ImageURL" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="@product.Name" />
+                <img src="@product.ImageURL"  alt="@product.Name" />
             }
             else
             {
-                <img src="~/img/no-image-available-02.jpg" class="img-fluid" style="max-height: 100px; object-fit: contain;" alt="No Image Available" />
+                <img src="~/img/no-image-available-02.jpg"  alt="No Image Available" />
             }
         </div>
-        <div class="col-md-4 text-start">
-            <h5 class="mb-0">@product.Name</h5>
+        <div class="Product-Name">
+            <h5>@product.Name</h5>
         </div>
-        <div class="col-md-2 text-start">
-            <h5 class="mb-0">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
+        <div class="Product-Price">
+            <h5>@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
         </div>
-        <div class="col-md-4 text-end">
+        <div class="RFC-Button">
             <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Remove from Cart</button>
             </form>
