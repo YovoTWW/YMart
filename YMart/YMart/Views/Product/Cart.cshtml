@@ -34,21 +34,38 @@
     }
 
     .Product-Name{
-        flex-grow:4;
+        flex-grow:3;
         text-align:left;
+    }
+
+    .Product-Quantity{
+        flex-grow:2;
+        display:flex;
+        gap:1rem;
+    }
+
+    .Product-Quantity *{
+        width:45%;
+        margin-top:0;
+        margin-bottom:0;
+        padding:0px;
+    }
+
+    .Product-Quantity h5{
+        text-align:right;
     }
 
     .Product-Price{
         flex-grow:2;
-        text-align:left;
+        text-align:center;
     }
 
-    .Product-Name h5, .Product-Price h5{
+    .Product-Name h5, .Product-Price h5,{
         margin-bottom:0 ;
     }
 
     .RFC-Button{
-        flex-grow:4;
+        flex-grow:3;
         text-align:right;
     }
 
@@ -69,6 +86,10 @@
         </div>
         <div class="Product-Name">
             <h5>@product.Name</h5>
+        </div>
+        <div class="Product-Quantity">
+            <h5>Quantity</h5>
+            <input @*asp-for="Quantity"*@ class="form-control" aria-required="true" type="number" step="1" min="1" value="1" />
         </div>
         <div class="Product-Price">
             <h5>@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>

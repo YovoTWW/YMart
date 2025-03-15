@@ -28,7 +28,8 @@ namespace YMart.Controllers
                     Id = p.Id,
                     ImageURL = p.ImageURL,
                     Name = p.Name,
-                    Price = p.Price,                    
+                    Price = p.Price,   
+                    Quantity = p.Quantity
                 }).AsNoTracking().ToListAsync();
 
             return this.View(model);
@@ -211,6 +212,7 @@ namespace YMart.Controllers
                     ImageURL = p.ImageURL,
                     Name = p.Name,
                     Price = p.Price,
+                    Quantity = p.Quantity,
                 }).AsNoTracking().ToListAsync();
 
             return this.View(model);
