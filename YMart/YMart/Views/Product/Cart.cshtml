@@ -1,8 +1,9 @@
 ﻿@using YMart.ViewModels.Product;
 @model IEnumerable<BasicProductViewModel>
 
-    @{
+@{
     ViewData["Title"] = "Cart";
+    int TotalItems = 0;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
@@ -77,6 +78,10 @@
 
 </style>
 
+<div class="Payment-Info">
+    <h5>Total Items : @TotalItems</h5>
+</div>
+
 @foreach (var product in Model)
 {
     <div class="Product-Section">
@@ -114,6 +119,7 @@
                     const quantity = parseInt(quantityInput.value) || 1;
                     const totalPrice = quantity * pricePerUnit;
                     priceElement.textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                    @TotalItems += quantity;
                 }
 
                 quantityInput.addEventListener("input", updatePrice);
