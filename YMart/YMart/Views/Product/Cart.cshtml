@@ -3,11 +3,15 @@
 
 @{
     ViewData["Title"] = "Cart";
-    int TotalItems = 0;
+    //int TotalItems = 0;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
     <h2>@ViewData["Title"]</h2>
+    <div class="Payment-Info">
+        <h5>Total Items: <span id="totalItems">0</span></h5>
+        <h5>Total Price: <span id="totalPrice">0 €</span></h5>
+    </div>
 </div>
 <hr />
 
@@ -25,6 +29,9 @@
     .Image-Container{
         text-align:center;
         flex-grow:2;
+        width:200px;
+        max-width:200px;
+        margin-right:20px;
     }
 
     .Image-Container img{
@@ -78,9 +85,7 @@
 
 </style>
 
-<div class="Payment-Info">
-    <h5>Total Items : @TotalItems</h5>
-</div>
+
 
 @foreach (var product in Model)
 {
@@ -104,27 +109,11 @@
         </div>
         <div class="Product-Quantity">
             <h5>Quantity</h5>
-            <input id="quantityInput" @*asp-for="Quantity"*@ class="form-control" aria-required="true" type="number" step="1" min="1" max="@product.Quantity" value="1" />
+            <input id="quantityInput" @*asp-for="Quantity"*@ class="form-control quantityInput" aria-required="true" type="number" step="1" min="1" max="@product.Quantity" value="1" />
         </div>
         <div class="Product-Price">
-            <h5 id="productPrice">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
+            <h5 id="productPrice" class="productPrice">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
         </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const quantityInput = document.getElementById("quantityInput");
-                const priceElement = document.getElementById("productPrice");
-                const pricePerUnit = @product.Price; // Injected from Razor
-
-                function updatePrice() {
-                    const quantity = parseInt(quantityInput.value) || 1;
-                    const totalPrice = quantity * pricePerUnit;
-                    priceElement.textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
-                    @TotalItems += quantity;
-                }
-
-                quantityInput.addEventListener("input", updatePrice);
-            });
-        </script>
         <div class="RFC-Button">
             <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Remove from Cart</button>
@@ -133,3 +122,64 @@
 
     </div>
 } 
+
+@*<script>
+    document.addEventListener("DOMContentLoaded", function () {     
+            document.querySelectorAll(".Product-Section").forEach(productSection => {
+                const quantityInput = productSection.querySelector(".quantityInput");
+                const priceElement = productSection.querySelector(".productPrice");
+                const pricePerUnit = parseFloat(priceElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+
+                function updatePrice() {
+                    const quantity = parseInt(quantityInput.value) || 1;
+                    const totalPrice = quantity * pricePerUnit;
+                   
+                    priceElement.textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                }
+
+                quantityInput.addEventListener("input", updatePrice);
+            });
+    });
+</script>*@
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function updateTotals() {
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            document.querySelectorAll(".Product-Section").forEach(productSection => {
+                const quantityInput = productSection.querySelector(".quantityInput");
+                const priceElement = productSection.querySelector(".productPrice");
+                const pricePerUnit = parseFloat(priceElement.dataset.originalPrice); // Use stored original price
+
+                const quantity = parseInt(quantityInput.value) || 1;
+                const itemTotalPrice = quantity * pricePerUnit;
+
+                totalItems += quantity;
+                totalPrice += itemTotalPrice;
+
+                // Update individual product price display
+                priceElement.textContent = itemTotalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+            });
+
+            // Update total items and total price display
+            document.getElementById("totalItems").textContent = totalItems;
+            document.getElementById("totalPrice").textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+        }
+
+        // Initialize each product's quantity listener
+        document.querySelectorAll(".Product-Section").forEach(productSection => {
+            const quantityInput = productSection.querySelector(".quantityInput");
+            const priceElement = productSection.querySelector(".productPrice");
+
+            // Store original price as a data attribute (prevents repeated parsing)
+            priceElement.dataset.originalPrice = parseFloat(priceElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+
+            quantityInput.addEventListener("input", updateTotals);
+        });
+
+        // Run once to set initial totals
+        updateTotals();
+    });
+</script>
