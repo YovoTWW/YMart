@@ -1,4 +1,5 @@
 ﻿@using YMart.ViewModels.Product;
+@using static YMart.Constants.CategoryList;
 
 @model IEnumerable<BasicProductViewModel>
 
@@ -38,47 +39,72 @@
         display:flex;
         flex-direction:column;
     }
+
+    .Info-Container{
+        display:flex;
+        flex-direction:row;
+    }
+
+    .Categories{
+        display: flex;
+        flex-direction: row;
+        gap:1rem;
+    }
+
+    .Categories>button{
+        height:0;
+        text-align:center;
+    }
+    
 </style>
 
-
+<div class="Info-Container">
 <div class="Top-Text">
     <h2>@ViewData["Title"]</h2>
 </div>
+<div class="Categories">
+        @foreach(var category in Categories)
+        {
+            <button class="User-Buttons">@category</button>
+        }
+    </div>
+</div>
 <hr />
 
-<div class="Product-Row">
-    @foreach (var product in Model)
-    {
-        <div class="Product-Box">
-            <div class="card">
-                @if (!string.IsNullOrEmpty(product.ImageURL))
-                {
-                    <img src="@product.ImageURL" class="card-img-top" alt="@product.Name">
-                }
-                else
-                {
-                    <img src="~/img/no-image-available-02.jpg" class="card-img-top" alt="No Image Available">
-                }
 
-                <div class="card-body">
-                    <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text">Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
-                    <div class="Buttons-Div">
-                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
-                        @if (User?.Identity?.IsAuthenticated == true)
+        <div class="Product-Row">
+            @foreach (var product in Model)
+            {
+                <div class="Product-Box">
+                    <div class="card">
+                        @if (!string.IsNullOrEmpty(product.ImageURL))
                         {
-                            <form asp-controller="Product" asp-action="AddToCart" method="post">
-                                <input type="hidden" name="id" value="@product.Id" />
-                                <button type="submit" class="User-Buttons" id="green" ><i class="bi bi-cart"></i>Add to Cart</button>
-                            </form>
+                            <img src="@product.ImageURL" class="card-img-top" alt="@product.Name">
                         }
                         else
-                        {                        
-                            <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons" id="green-a"><i class="bi bi-cart"></i>Add to Cart</a>
+                        {
+                            <img src="~/img/no-image-available-02.jpg" class="card-img-top" alt="No Image Available">
                         }
+
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
+                            <div class="Buttons-Div">
+                                <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
+                                @if (User?.Identity?.IsAuthenticated == true)
+                                {
+                                    <form asp-controller="Product" asp-action="AddToCart" method="post">
+                                        <input type="hidden" name="id" value="@product.Id" />
+                                        <button type="submit" class="User-Buttons" id="green" ><i class="bi bi-cart"></i>Add to Cart</button>
+                                    </form>
+                                }
+                                else
+                                {                        
+                                    <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons" id="green-a"><i class="bi bi-cart"></i>Add to Cart</a>
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
-    }
-</div>
