@@ -19,9 +19,10 @@ namespace YMart.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string CategoryFilter)
         {
-           
+            ViewData["CategoryFilter"] = CategoryFilter;
+
             var model = await dbContext.Products.Where(p => p.IsDeleted == false)
                 .Select(p => new BasicProductViewModel()
                 {
@@ -29,8 +30,14 @@ namespace YMart.Controllers
                     ImageURL = p.ImageURL,
                     Name = p.Name,
                     Price = p.Price,   
-                    Quantity = p.Quantity
+                    Quantity = p.Quantity,
+                    Category = p.Category
                 }).AsNoTracking().ToListAsync();
+
+            if (!string.IsNullOrEmpty(CategoryFilter) && CategoryFilter!="All")
+            {
+                model = model.Where(e => e.Category==CategoryFilter).ToList();
+            }
 
             return this.View(model);
         }
