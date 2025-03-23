@@ -4,7 +4,7 @@
 @model IEnumerable<BasicProductViewModel>
 
 @{
-    string categoryFilter = ViewData["CategoryFilter"] as string ?? string.Empty;
+    string categoryFilter = ViewData["CategoryFilter"] as string ?? "All";
     ViewData["Title"] = "Products List";
     
 }
@@ -67,13 +67,13 @@
 <div class="Top-Text">
     <h2>@ViewData["Title"]</h2>
 </div>
-<div class="Categories">
-        <button type="submit" class="User-Buttons" @categoryFilter="All">All</button>
+<form method="get" class="Categories">
+        <button type="submit" class="User-Buttons" name="categoryFilter" value="All" >All</button>
         @foreach(var category in Categories)
         {
-            <button type ="submit" class="User-Buttons" @categoryFilter=@category>@category</button>
+           <button type="submit" class="User-Buttons" name="categoryFilter" value="@category">@category</button>
         }
-    </div>
+</form>
 </div>
 <hr />
 
