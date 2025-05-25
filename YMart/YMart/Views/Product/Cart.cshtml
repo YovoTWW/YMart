@@ -7,11 +7,18 @@
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
-    <h2>@ViewData["Title"]</h2>
-    <div class="Payment-Info">
-        <h5>Total Items: <span id="totalItems">0</span></h5>
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h2>@ViewData["Title"]</h2>
+        <div class="Payment-Info">
+            <h5>Total Items: <span id="totalItems">0</span></h5>
         <h5>Total Price: <span id="totalPrice">0 €</span></h5>
     </div>
+    }
+    @if (!User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h2>Can only be viewed by Logged in Users</h2>
+    }
 </div>
 <hr />
 
@@ -86,9 +93,10 @@
 </style>
 
 
-
-@foreach (var product in Model)
+@if (User?.Identity?.IsAuthenticated ?? false)
 {
+    @foreach (var product in Model)
+    {
     <div class="Product-Section">
         <div class="Image-Container">
             @if (!string.IsNullOrEmpty(product.ImageURL))
@@ -121,7 +129,8 @@
         </div>
 
     </div>
-} 
+    } 
+}
 
 @*<script>
     document.addEventListener("DOMContentLoaded", function () {     
