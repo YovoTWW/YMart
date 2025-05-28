@@ -238,6 +238,7 @@ namespace YMart.Controllers
 
             if (entity.Carts.Any(pc => pc.ClientId == currentUserId))
             {
+                TempData["ShowPopup"] = true;
                 return this.RedirectToAction("Index");
             }
 

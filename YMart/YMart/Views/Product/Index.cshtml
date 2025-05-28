@@ -10,7 +10,6 @@
 }
 
 
-
 <link rel="stylesheet" href ="~/css/style.css" />
 
 <style>
@@ -119,3 +118,10 @@
                 </div>
             }
         </div>
+
+@if (TempData["ShowPopup"] != null && (bool)TempData["ShowPopup"])
+{
+    <script>
+        alert("Item already in cart.");
+    </script>
+}
