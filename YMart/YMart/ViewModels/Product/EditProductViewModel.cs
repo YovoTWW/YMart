@@ -1,9 +1,12 @@
-﻿using static YMart.Constants.CategoryList;
+﻿using System.ComponentModel.DataAnnotations;
+using static YMart.Constants.CategoryList;
 
 namespace YMart.ViewModels.Product
 {
     public class EditProductViewModel
     {
+        [MinLength(3, ErrorMessage = "Organiser Name cant be less than 3 characters long")]
+        [MaxLength(40, ErrorMessage = "Organiser Name cant be more than 40 characters long")]
         public string Name { get; set; } = null!;
 
 
