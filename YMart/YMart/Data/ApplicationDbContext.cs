@@ -22,5 +22,7 @@ namespace YMart.Data
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Cart> Cart { get; set; }
+
+        public DbSet<Brochure> Brochure { get; set;}
     }
 }

@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using YMart.Data;
+using YMart.Data.Models;
 using YMart.Models;
+using YMart.ViewModels.Brochure;
 
 namespace YMart.Controllers
 {
@@ -8,14 +12,21 @@ namespace YMart.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext dbContext;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
+            dbContext = context;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await dbContext.Brochure.Where(b=>b.IsActive == true)
+                .Select(b=>b.ImageURL).AsNoTracking().ToListAsync();
+
+            return this.View(model);
         }
 
         public IActionResult Privacy()
@@ -32,6 +43,34 @@ namespace YMart.Controllers
         public IActionResult NotSignedIn()
         {
             return this.View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddBrochure()
+        {
+            var model = new AddBrochureViewModel();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddBrochure(AddBrochureViewModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            Brochure brochure = new Brochure
+            {
+                ImageURL = model.ImageURL,
+                Products = model.Products,
+                IsActive = true
+            };
+
+            await dbContext.Brochure.AddAsync(brochure);
+            await dbContext.SaveChangesAsync();
+
+            return this.RedirectToAction("Index");
         }
     }
 }
