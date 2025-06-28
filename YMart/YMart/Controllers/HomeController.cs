@@ -23,8 +23,12 @@ namespace YMart.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await dbContext.Brochure.Where(b=>b.IsActive == true)
-                .Select(b=>b.ImageURL).AsNoTracking().ToListAsync();
+            var model = await dbContext.Brochure.Where(b => b.IsActive == true)
+                .Select(b => new AddBrochureViewModel()
+                {
+                    ImageURL = b.ImageURL,
+                    ProductNames = b.ProductNames
+                }).AsNoTracking().ToListAsync();
 
             return this.View(model);
         }
@@ -48,6 +52,7 @@ namespace YMart.Controllers
         [HttpGet]
         public async Task<IActionResult> AddBrochure()
         {
+            ViewData["ProductNamesList"] = dbContext.Products.Where(p => p.IsDeleted == false).Select(p => p.Name).ToList();
             var model = new AddBrochureViewModel();
             return this.View(model);
         }
@@ -63,7 +68,7 @@ namespace YMart.Controllers
             Brochure brochure = new Brochure
             {
                 ImageURL = model.ImageURL,
-                Products = model.Products,
+                ProductNames = dbContext.Products.Where(p=>p.IsDeleted==false && model.ProductNames.Contains(p.Name)).Select(pn=>pn.Name).ToList(),
                 IsActive = true
             };
 

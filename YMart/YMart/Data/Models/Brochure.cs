@@ -7,7 +7,7 @@ namespace YMart.Data.Models
         public Brochure()
         { 
             this.Id = Guid.NewGuid();
-            this.Products = new List<Product>();
+            //this.Products = new List<Product>();
         }
 
         public Guid Id { get; set; }
@@ -17,6 +17,7 @@ namespace YMart.Data.Models
 
         public bool IsActive { get; set; }
 
-        public List<Product> Products {get; set;} 
+        //public List<Product> Products {get; set;} 
+        public List<string> ProductNames {  get; set; }
     }
 }

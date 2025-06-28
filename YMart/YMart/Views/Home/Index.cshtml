@@ -1,4 +1,5 @@
-﻿@model List<string>
+﻿@using YMart.ViewModels.Brochure;
+@model IEnumerable<AddBrochureViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,8 +7,10 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome to YMart</h1>
-    @if (Model.Count>0)
+    @foreach(var Brochure in Model)
     {
-        <img src = @Model[0] />
+        <a href="@Url.Action("Index", "Product", new { productNames = Brochure.ProductNames })">
+            <img src="@Brochure.ImageURL" alt="Brochure Image" />
+        </a>
     }
 </div>

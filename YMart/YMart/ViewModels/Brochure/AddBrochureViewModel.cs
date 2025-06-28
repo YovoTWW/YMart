@@ -8,7 +8,7 @@ namespace YMart.ViewModels.Brochure
         [Required]
         public string ImageURL { get; set; }
 
-        public List<Product> Products { get; set; }
+        public List<string> ProductNames { get; set; }
 
     }
 }
