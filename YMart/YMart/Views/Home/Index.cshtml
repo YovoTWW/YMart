@@ -1,16 +1,57 @@
 ﻿@using YMart.ViewModels.Brochure;
-@model IEnumerable<AddBrochureViewModel>
+@using System.Text.Json;
+@model List<AddBrochureViewModel>
 
-@{
+@{   
     ViewData["Title"] = "Home Page";
+    var brochureDataJson = JsonSerializer.Serialize(Model);  
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to YMart</h1>
-    @foreach(var Brochure in Model)
-    {
-        <a href="@Url.Action("Index", "Product", new { productNames = Brochure.ProductNames })">
-            <img src="@Brochure.ImageURL" alt="Brochure Image" />
+    <div id="slider-container" style="text-align:center;">
+        <a id="brochure-link" href="#">
+            <img id="brochure-image" src="" alt="Brochure Image" style="width:1400px; height:350px;" />
         </a>
-    }
+
+    <div style="margin-top: 10px;">
+        <button onclick="prevImage()" style="margin-right: 20px;">←</button>
+        <button onclick="nextImage()">→</button>
+    </div>
+    </div>
 </div>
+
+
+    @section Scripts {
+        <script>
+            const brochures = @Html.Raw(@brochureDataJson);
+            let currentIndex = 0;
+
+            function updateBrochure() {
+                const current = brochures[currentIndex];
+                const img = document.getElementById("brochure-image");
+                const link = document.getElementById("brochure-link");
+
+                img.src = current.ImageURL;
+
+                // Build productNames query string
+                const queryParams = current.ProductNames.map(p => `productNames=${encodeURIComponent(p)}`).join("&");
+                link.href = `/Product/Index?${queryParams}`;
+            }
+
+            function nextImage() {
+                currentIndex = (currentIndex + 1) % brochures.length;
+                updateBrochure();
+            }
+
+            function prevImage() {
+                currentIndex = (currentIndex - 1 + brochures.length) % brochures.length;
+                updateBrochure();
+            }
+
+            // Initialize on load
+            document.addEventListener("DOMContentLoaded", function () {
+                updateBrochure();
+            });
+        </script>
+    }
