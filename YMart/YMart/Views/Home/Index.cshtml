@@ -7,6 +7,12 @@
     var brochureDataJson = JsonSerializer.Serialize(Model);  
 }
 
+<style>
+    button{
+        border-radius:0.25rem;
+    }
+</style>
+
 <div class="text-center">
     <h1 class="display-4">Welcome to YMart</h1>
     <div id="slider-container" style="text-align:center;">
@@ -15,8 +21,8 @@
         </a>
 
     <div style="margin-top: 10px;">
-        <button onclick="prevImage()" style="margin-right: 20px;">←</button>
-        <button onclick="nextImage()">→</button>
+            <button onclick="prevImage()" style="margin-right: 20px;"><i class="bi bi-arrow-bar-left"></i></button>
+            <button onclick="nextImage()"><i class="bi bi-arrow-bar-right"></i></button>
     </div>
     </div>
 </div>
