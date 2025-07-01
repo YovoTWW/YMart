@@ -10,6 +10,7 @@ namespace YMart.Data.Models
             //this.Products = new List<Product>();
         }
 
+        [Key]
         public Guid Id { get; set; }
 
         [Required]

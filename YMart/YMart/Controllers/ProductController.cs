@@ -37,6 +37,7 @@ namespace YMart.Controllers
                         ImageURL = p.ImageURL,
                         Name = p.Name,
                         Price = p.Price,
+                        DicountedPrice = p.DiscountedPrice,
                         Quantity = p.Quantity,
                         Category = p.Category
                     }).AsNoTracking().ToListAsync();
@@ -116,7 +117,9 @@ namespace YMart.Controllers
                 Price = p.Price,
                 ImageURL = p.ImageURL,
                 Category = p.Category,
-                Quantity = p.Quantity
+                Quantity = p.Quantity,
+                IsOnSale = p.IsOnSale,
+                DiscountPercentage = p.DiscountPercentage,
             }).FirstOrDefaultAsync();
 
             return this.View(model);
@@ -137,6 +140,13 @@ namespace YMart.Controllers
                 return this.View(model);
             }
 
+            if (model.DiscountPercentage < 0 || model.DiscountPercentage > 100)
+            {
+                ModelState.AddModelError(nameof(model.DiscountPercentage), $"Discount Percentage must be between {0}% and {100}%");
+
+                return this.View(model);
+            }
+
             Product? entity = await dbContext.Products.FindAsync(id);
 
             if (entity == null || entity.IsDeleted)
@@ -151,6 +161,8 @@ namespace YMart.Controllers
             entity.ImageURL = model.ImageURL;            
             entity.Category = model.Category;
             entity.Quantity = model.Quantity;
+            entity.IsOnSale = model.IsOnSale;
+            entity.DiscountPercentage = model.DiscountPercentage;
 
             await this.dbContext.SaveChangesAsync();
 
@@ -284,6 +296,8 @@ namespace YMart.Controllers
 
             return this.RedirectToAction("Cart");
         }
+
+
 
         private string? GetCurrentUserId()
         {

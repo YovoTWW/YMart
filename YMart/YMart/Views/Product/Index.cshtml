@@ -71,6 +71,15 @@
         height:0;
        padding:1rem;
     }
+
+    .card-text{
+        margin-bottom:0px;
+    }
+
+    #dp-text{
+         color:red;
+         margin-bottom:0.5rem;
+    }
     
 </style>
 
@@ -105,8 +114,15 @@
 
                         <div class="card-body">
                             <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</p>
-                            <div class="Buttons-Div">
+                    <p class="card-text"
+                       style="@(product.DicountedPrice != product.Price ? "text-decoration: line-through; color: gray;" : "")">
+                        Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                    </p>
+                    <p class="discount-text" id="dp-text"
+                       style="@(product.DicountedPrice == product.Price ? "visibility:hidden;" : "")">
+                       Discounted Price: @product.DicountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                    </p>
+                    <div class="Buttons-Div">
                                 <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
                                 @if (User?.Identity?.IsAuthenticated == true)
                                 {

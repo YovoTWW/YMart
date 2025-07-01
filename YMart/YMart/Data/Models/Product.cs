@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace YMart.Data.Models
 {
@@ -33,6 +34,24 @@ namespace YMart.Data.Models
 
         public bool IsDeleted {  get; set; }
 
-        public List<Cart> Carts { get; set; } 
+        public List<Cart> Carts { get; set; }
+
+        public bool IsOnSale { get; set; } = false;
+
+        public decimal? DiscountPercentage { get; set; } 
+
+        [NotMapped]
+        public decimal DiscountedPrice
+        {
+            get
+            {
+                if (IsOnSale && DiscountPercentage.HasValue)
+                {
+                    return Math.Round(Price * (1 - DiscountPercentage.Value / 100), 2);
+                }
+
+                return Price;
+            }
+        }
     }
 }
