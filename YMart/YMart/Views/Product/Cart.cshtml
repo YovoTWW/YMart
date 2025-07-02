@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Cart";
-    //int TotalItems = 0;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
@@ -12,10 +11,10 @@
         <h2>@ViewData["Title"]</h2>
         <div class="Payment-Info">
             <h5>Total Items: <span id="totalItems">0</span></h5>
-        <h5>Total Price: <span id="totalPrice">0 €</span></h5>
-    </div>
+            <h5>Total Price: <span id="totalPrice">0 €</span></h5>
+        </div>
     }
-    @if (!User?.Identity?.IsAuthenticated ?? false)
+    else
     {
         <h2>Can only be viewed by Logged in Users</h2>
     }
@@ -23,136 +22,125 @@
 <hr />
 
 <style>
-    .Product-Section{
-        display:flex;
-        flex-direction:row;
-        padding-top:1rem;
-        padding-bottom:1rem;
-        margin-bottom:1.5rem;
-        align-items:center;
+    .Product-Section {
+        display: flex;
+        flex-direction: row;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1.5rem;
+        align-items: center;
         border-bottom: 1px solid #ccc;
     }
 
-    .Image-Container{
-        text-align:center;
-        flex-grow:2;
-        width:200px;
-        max-width:200px;
-        margin-right:20px;
+    .Image-Container {
+        text-align: center;
+        flex-grow: 2;
+        width: 200px;
+        max-width: 200px;
+        margin-right: 20px;
     }
 
-    .Image-Container img{
-        max-width:100%;
-        height:auto;
-        max-height:100px;
-        object-fit: contain;
+        .Image-Container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 100px;
+            object-fit: contain;
+        }
+
+    .Product-Info {
+        flex-grow: 2;
+        display: flex;
+        flex-direction: column;
+        width: 185px;
     }
 
-    .Product-Info{
-        flex-grow:2;
-        display:flex;
-        flex-direction:column;
-        width:185px;
+    .Product-Name {
+        flex-grow: 3;
+        text-align: left;
+        width: 450px;
     }
 
-    .Product-Name{
-        flex-grow:3;
-        text-align:left;
-        width:450px;
+    .Product-Quantity {
+        flex-grow: 2;
+        display: flex;
+        gap: 1rem;
     }
 
-    .Product-Quantity{
-        flex-grow:2;
-        display:flex;
-        gap:1rem;
+        .Product-Quantity * {
+            width: 45%;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0px;
+        }
+
+        .Product-Quantity h5 {
+            text-align: right;
+        }
+
+    .Product-Price {
+        flex-grow: 1;
+        text-align: center;
+        width: 85px;
     }
 
-    .Product-Quantity *{
-        width:45%;
-        margin-top:0;
-        margin-bottom:0;
-        padding:0px;
+        .Product-Name h5,
+        .Product-Price h5 {
+            margin-bottom: 0;
+        }
+
+    .RFC-Button {
+        flex-grow: 2;
+        text-align: right;
     }
 
-    .Product-Quantity h5{
-        text-align:right;
+    .discounted-price {
+        font-weight: bold;
+        color: green;
     }
-
-    .Product-Price{
-        flex-grow:1;
-        text-align:center;
-        width:85px;
-    }
-
-    .Product-Name h5, .Product-Price h5,{
-        margin-bottom:0 ;
-    }
-
-    .RFC-Button{
-        flex-grow:2;
-        text-align:right;
-    }
-
 </style>
-
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
     @foreach (var product in Model)
     {
-    <div class="Product-Section">
-        <div class="Image-Container">
-            @if (!string.IsNullOrEmpty(product.ImageURL))
-            {
-                <img src="@product.ImageURL"  alt="@product.Name" />
-            }
-            else
-            {
-                <img src="~/img/no-image-available-02.jpg"  alt="No Image Available" />
-            }
-        </div>
-        <div class="Product-Info">
-            <h6>Items in stock : @product.Quantity</h6>
-            <h6>Price per unit : @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h6>
-        </div>
-        <div class="Product-Name">
-            <h5>@product.Name</h5>
-        </div>
-        <div class="Product-Quantity">
-            <h5>Quantity</h5>
-            <input id="quantityInput" @*asp-for="Quantity"*@ class="form-control quantityInput" aria-required="true" type="number" step="1" min="1" max="@product.Quantity" value="1" />
-        </div>
-        <div class="Product-Price">
-            <h5 id="productPrice" class="productPrice">@product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))</h5>
-        </div>
-        <div class="RFC-Button">
-            <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
-                <button type="submit" class="btn btn-danger">Remove from Cart</button>
-            </form>
-        </div>
+        <div class="Product-Section">
+            <div class="Image-Container">
+                <img src="@(!string.IsNullOrEmpty(product.ImageURL) ? product.ImageURL : Url.Content("~/img/no-image-available-02.jpg"))" alt="@product.Name" />
+            </div>
 
-    </div>
-    } 
+            <div class="Product-Info">
+                <h6>Items in stock: @product.Quantity</h6>
+                <h6>
+                    Price per unit:
+                    <span class="discounted-price productPrice"
+                          data-price="@(product.DiscountedPrice < product.Price ? product.DiscountedPrice : product.Price)">
+                        @((product.DiscountedPrice < product.Price ? product.DiscountedPrice : product.Price)
+                            .ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR")))
+                    </span>
+                </h6>
+            </div>
+
+            <div class="Product-Name">
+                <h5>@product.Name</h5>
+            </div>
+
+            <div class="Product-Quantity">
+                <h5>Quantity</h5>
+                <input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />
+            </div>
+
+            <div class="Product-Price">
+                <h5 class="lineTotal">0 €</h5>
+            </div>
+
+            <div class="RFC-Button">
+                <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Remove from Cart</button>
+                </form>
+            </div>
+        </div>
+    }
 }
-
-@*<script>
-    document.addEventListener("DOMContentLoaded", function () {     
-            document.querySelectorAll(".Product-Section").forEach(productSection => {
-                const quantityInput = productSection.querySelector(".quantityInput");
-                const priceElement = productSection.querySelector(".productPrice");
-                const pricePerUnit = parseFloat(priceElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
-
-                function updatePrice() {
-                    const quantity = parseInt(quantityInput.value) || 1;
-                    const totalPrice = quantity * pricePerUnit;
-                   
-                    priceElement.textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
-                }
-
-                quantityInput.addEventListener("input", updatePrice);
-            });
-    });
-</script>*@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -160,38 +148,29 @@
             let totalItems = 0;
             let totalPrice = 0;
 
-            document.querySelectorAll(".Product-Section").forEach(productSection => {
-                const quantityInput = productSection.querySelector(".quantityInput");
-                const priceElement = productSection.querySelector(".productPrice");
-                const pricePerUnit = parseFloat(priceElement.dataset.originalPrice); // Use stored original price
+            document.querySelectorAll(".Product-Section").forEach(section => {
+                const quantityInput = section.querySelector(".quantityInput");
+                const priceElement = section.querySelector(".productPrice");
+                const lineTotalElement = section.querySelector(".lineTotal");
 
+                const unitPrice = parseFloat(priceElement.dataset.price);
                 const quantity = parseInt(quantityInput.value) || 1;
-                const itemTotalPrice = quantity * pricePerUnit;
+                const itemTotal = unitPrice * quantity;
 
                 totalItems += quantity;
-                totalPrice += itemTotalPrice;
+                totalPrice += itemTotal;
 
-                // Update individual product price display
-                priceElement.textContent = itemTotalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+                lineTotalElement.textContent = itemTotal.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
             });
 
-            // Update total items and total price display
             document.getElementById("totalItems").textContent = totalItems;
             document.getElementById("totalPrice").textContent = totalPrice.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
         }
 
-        // Initialize each product's quantity listener
-        document.querySelectorAll(".Product-Section").forEach(productSection => {
-            const quantityInput = productSection.querySelector(".quantityInput");
-            const priceElement = productSection.querySelector(".productPrice");
-
-            // Store original price as a data attribute (prevents repeated parsing)
-            priceElement.dataset.originalPrice = parseFloat(priceElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
-
-            quantityInput.addEventListener("input", updateTotals);
+        document.querySelectorAll(".quantityInput").forEach(input => {
+            input.addEventListener("input", updateTotals);
         });
 
-        // Run once to set initial totals
         updateTotals();
     });
 </script>

@@ -19,6 +19,11 @@
         gap:3rem;
     }
 
+    #dp-text {
+        color: red;
+        margin-bottom: 0.5rem;
+    }
+
     
 </style>
 
@@ -43,7 +48,15 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <hr />
-            <h6 class="card-subtitle mb-2 text-muted">@Model.Price.ToString("C")</h6>
+          @*<h6 class="card-subtitle mb-2 text-muted">@Model.Price.ToString("C")</h6>*@
+            <h6 class="card-subtitle mb-2 text-muted"
+               style="@(Model.DiscountedPrice != Model.Price ? "text-decoration: line-through; color: gray;" : "")">
+                Price: @Model.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+            </h6>
+            <h6 class="card-subtitle mb-2 text-mutedt" id="dp-text"
+               style="@(Model.DiscountedPrice == Model.Price ? "visibility:hidden;" : "")">
+                Discounted Price: @Model.DiscountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+            </h6>
             <hr />
             <p class="card-text" style="white-space:normal; word-break:break-word">@Model.Description</p>
             <hr />

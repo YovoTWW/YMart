@@ -37,7 +37,7 @@ namespace YMart.Controllers
                         ImageURL = p.ImageURL,
                         Name = p.Name,
                         Price = p.Price,
-                        DicountedPrice = p.DiscountedPrice,
+                        DiscountedPrice = p.DiscountedPrice,
                         Quantity = p.Quantity,
                         Category = p.Category
                     }).AsNoTracking().ToListAsync();
@@ -100,6 +100,7 @@ namespace YMart.Controllers
                 ImageURL = p.ImageURL,                
                 Name = p.Name,               
                 Price = p.Price,
+                DiscountedPrice = p.DiscountedPrice,
                 Quantity= p.Quantity
             }).FirstOrDefaultAsync();
 
@@ -239,6 +240,7 @@ namespace YMart.Controllers
                     ImageURL = p.ImageURL,
                     Name = p.Name,
                     Price = p.Price,
+                    DiscountedPrice = p.DiscountedPrice,
                     Quantity = p.Quantity,
                 }).AsNoTracking().ToListAsync();
 

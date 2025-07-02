@@ -18,6 +18,8 @@
 
         public int Quantity { get; set; }
 
+        public decimal DiscountedPrice { get; set; }
+
 
         public string ImageURL { get; set; } = null!;
     }

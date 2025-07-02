@@ -7,7 +7,7 @@
         public Guid Id { get; set; }
         public string Name { get; set; } = null!;
         public decimal Price { get; set; }
-        public decimal DicountedPrice { get; set; }
+        public decimal DiscountedPrice { get; set; }
         public string ImageURL { get; set; } = null!;
         public int Quantity { get; set; }
 

@@ -115,12 +115,12 @@
                         <div class="card-body">
                             <h5 class="card-title">@product.Name</h5>
                     <p class="card-text"
-                       style="@(product.DicountedPrice != product.Price ? "text-decoration: line-through; color: gray;" : "")">
+                       style="@(product.DiscountedPrice != product.Price ? "text-decoration: line-through; color: gray;" : "")">
                         Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
                     </p>
                     <p class="discount-text" id="dp-text"
-                       style="@(product.DicountedPrice == product.Price ? "visibility:hidden;" : "")">
-                       Discounted Price: @product.DicountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                       style="@(product.DiscountedPrice == product.Price ? "visibility:hidden;" : "")">
+                       Discounted Price: @product.DiscountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
                     </p>
                     <div class="Buttons-Div">
                                 <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
