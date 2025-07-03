@@ -24,6 +24,10 @@ namespace YMart.ViewModels.Product
 
         public string ImageURL { get; set; } = null!;
 
+        public bool IsOnSale { get; set; }
+
+        public decimal? DiscountPercentage { get; set; }
+
         public List<string> CategoriesList { get; set; } = Categories;
     }
 }

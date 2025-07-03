@@ -78,6 +78,8 @@ namespace YMart.Controllers
                 Name = model.Name,
                 Description = model.Description,
                 Price = model.Price,
+                DiscountPercentage = model.DiscountPercentage,
+                IsOnSale = model.IsOnSale,
                 ImageURL = model.ImageURL,
                 Category = model.Category,
                 Quantity = model.Quantity
