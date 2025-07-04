@@ -27,6 +27,7 @@
         min-width:23%;
         max-width:23%;
         text-align:center;
+        position:relative;
     }
 
     .card{
@@ -80,6 +81,19 @@
          color:red;
          margin-bottom:0.5rem;
     }
+
+    .discount-badge {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: red;
+        color: white;
+        padding: 4px 8px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        border-radius: 8px;
+        z-index: 1;
+    }
     
 </style>
 
@@ -102,6 +116,10 @@
             @foreach (var product in Model)
             {
                 <div class="Product-Box">
+            @if (product.DiscountedPrice < product.Price)
+            {               
+                <div class="discount-badge">-@product.DiscountPercentage%</div>
+            }
                     <div class="card">
                         @if (!string.IsNullOrEmpty(product.ImageURL))
                         {

@@ -38,6 +38,7 @@ namespace YMart.Controllers
                         Name = p.Name,
                         Price = p.Price,
                         DiscountedPrice = p.DiscountedPrice,
+                        DiscountPercentage = p.DiscountPercentage,
                         Quantity = p.Quantity,
                         Category = p.Category
                     }).AsNoTracking().ToListAsync();
@@ -103,6 +104,7 @@ namespace YMart.Controllers
                 Name = p.Name,               
                 Price = p.Price,
                 DiscountedPrice = p.DiscountedPrice,
+                DiscountPercentage = p.DiscountPercentage,
                 Quantity= p.Quantity
             }).FirstOrDefaultAsync();
 

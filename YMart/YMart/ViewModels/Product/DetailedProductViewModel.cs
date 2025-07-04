@@ -20,6 +20,7 @@
 
         public decimal DiscountedPrice { get; set; }
 
+        public decimal? DiscountPercentage { get; set; }
 
         public string ImageURL { get; set; } = null!;
     }

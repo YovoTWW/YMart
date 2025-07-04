@@ -13,6 +13,8 @@
 
         public string Category { get; set; } = null!;
 
-       // public List<string> CategoriesList { get; } = CategoryList.Categories;
+        public decimal? DiscountPercentage { get; set; }
+
+        // public List<string> CategoriesList { get; } = CategoryList.Categories;
     }
 }

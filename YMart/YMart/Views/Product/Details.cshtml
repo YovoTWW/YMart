@@ -55,7 +55,7 @@
             </h6>
             <h6 class="card-subtitle mb-2 text-mutedt" id="dp-text"
                style="@(Model.DiscountedPrice == Model.Price ? "visibility:hidden;" : "")">
-                Discounted Price: @Model.DiscountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                Discounted Price: @Model.DiscountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR")) (-@Model.DiscountPercentage% Discount)
             </h6>
             <hr />
             <p class="card-text" style="white-space:normal; word-break:break-word">@Model.Description</p>
