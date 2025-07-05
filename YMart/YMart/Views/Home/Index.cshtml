@@ -1,17 +1,15 @@
-﻿@using YMart.ViewModels.Brochure;
+﻿@using YMart.ViewModels.HomePage;
 @using System.Text.Json;
-@model List<AddBrochureViewModel>
+@model HomePageViewModel
 
 @{   
     ViewData["Title"] = "Home Page";
-    var brochureDataJson = JsonSerializer.Serialize(Model);  
+    var brochureDataJson = JsonSerializer.Serialize(Model.Brochures);  
 }
 
-<style>
-    button{
-        border-radius:0.25rem;
-    }
-</style>
+<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/css/products.css" />
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome to YMart</h1>
@@ -21,12 +19,65 @@
         </a>
 
     <div style="margin-top: 10px;">
-            <button onclick="prevImage()" style="margin-right: 20px;"><i class="bi bi-arrow-bar-left"></i></button>
-            <button onclick="nextImage()"><i class="bi bi-arrow-bar-right"></i></button>
+            <button onclick="prevImage()" style="margin-right: 20px ; border-radius:0.25rem;"><i class="bi bi-arrow-bar-left"></i></button>
+            <button onclick="nextImage()" style="border-radius:0.25rem;"><i class="bi bi-arrow-bar-right"></i></button>
     </div>
     </div>
 </div>
 
+<br />
+<br />
+
+<h2>Current Offers</h2>
+<br />
+
+<div class="Product-Row">
+    @foreach (var product in Model.Offers)
+    {
+        <div class="Product-Box">
+            @if (product.DiscountedPrice < product.Price)
+            {
+                <div class="discount-badge">-@product.DiscountPercentage%</div>
+            }
+            <div class="card">
+                @if (!string.IsNullOrEmpty(product.ImageURL))
+                {
+                    <img src="@product.ImageURL" class="card-img-top" alt="@product.Name">
+                }
+                else
+                {
+                    <img src="~/img/no-image-available-02.jpg" class="card-img-top" alt="No Image Available">
+                }
+
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text"
+                       style="@(product.DiscountedPrice != product.Price ? "text-decoration: line-through; color: gray;" : "")">
+                        Price: @product.Price.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                    </p>
+                    <p class="discount-text" id="dp-text"
+                       style="@(product.DiscountedPrice == product.Price ? "visibility:hidden;" : "")">
+                        Discounted Price: @product.DiscountedPrice.ToString("C", System.Globalization.CultureInfo.CreateSpecificCulture("fr-FR"))
+                    </p>
+                    <div class="Buttons-Div">
+                        <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <form asp-controller="Product" asp-action="AddToCart" method="post">
+                                <input type="hidden" name="id" value="@product.Id" />
+                                <button type="submit" class="User-Buttons" id="green"><i class="bi bi-cart"></i>Add to Cart</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Home" asp-action="NotSignedIn" class="User-Buttons" id="green-a"><i class="bi bi-cart"></i>Add to Cart</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
     @section Scripts {
         <script>

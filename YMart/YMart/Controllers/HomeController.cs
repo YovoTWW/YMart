@@ -5,6 +5,9 @@ using YMart.Data;
 using YMart.Data.Models;
 using YMart.Models;
 using YMart.ViewModels.Brochure;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using YMart.ViewModels.Product;
+using YMart.ViewModels.HomePage;
 
 namespace YMart.Controllers
 {
@@ -23,12 +26,41 @@ namespace YMart.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await dbContext.Brochure.Where(b => b.IsActive == true)
+            /*var model = await dbContext.Brochure.Where(b => b.IsActive == true)
                 .Select(b => new AddBrochureViewModel()
                 {
                     ImageURL = b.ImageURL,
                     ProductNames = b.ProductNames
                 }).AsNoTracking().ToListAsync();
+
+            return this.View(model);*/
+
+
+            var Brochures = await dbContext.Brochure.Where(b => b.IsActive == true)
+                .Select(b => new AddBrochureViewModel()
+                {
+                    ImageURL = b.ImageURL,
+                    ProductNames = b.ProductNames
+                }).AsNoTracking().ToListAsync();
+
+            var Offers = await dbContext.Products.Where(p => p.IsDeleted == false && p.IsOnSale && p.DiscountPercentage.HasValue)
+                    .Select(p => new BasicProductViewModel()
+                    {
+                        Id = p.Id,
+                        ImageURL = p.ImageURL,
+                        Name = p.Name,
+                        Price = p.Price,
+                        DiscountedPrice = p.DiscountedPrice,
+                        DiscountPercentage = p.DiscountPercentage,
+                        Quantity = p.Quantity,
+                        Category = p.Category
+                    }).AsNoTracking().ToListAsync();
+
+            var model = new HomePageViewModel()
+            {
+                Offers = Offers,
+                Brochures = Brochures
+            };
 
             return this.View(model);
         }
