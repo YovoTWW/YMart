@@ -23,5 +23,9 @@
         public decimal? DiscountPercentage { get; set; }
 
         public string ImageURL { get; set; } = null!;
+
+        public string? PreviousPageAction {  get; set; }
+
+        public string? PreviousPageController { get; set; }
     }
 }

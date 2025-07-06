@@ -93,7 +93,7 @@ namespace YMart.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id)
+        public async Task<IActionResult> Details(Guid id, string returnController, string returnAction)
         {
             var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new DetailedProductViewModel
             {
@@ -105,7 +105,9 @@ namespace YMart.Controllers
                 Price = p.Price,
                 DiscountedPrice = p.DiscountedPrice,
                 DiscountPercentage = p.DiscountPercentage,
-                Quantity= p.Quantity
+                Quantity= p.Quantity,
+                PreviousPageAction = returnAction ?? "Index",
+                PreviousPageController = returnController ?? "Home"
             }).FirstOrDefaultAsync();
 
 
@@ -252,7 +254,7 @@ namespace YMart.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCart(Guid id)
+        public async Task<IActionResult> AddToCart(Guid id,string returnController, string returnAction)
         {
             string currentUserId = GetCurrentUserId() ?? string.Empty;
             Product? entity = await dbContext.Products.Where(p => p.Id == id).Include(p => p.Carts).FirstOrDefaultAsync();
@@ -264,7 +266,12 @@ namespace YMart.Controllers
 
             if (entity.Carts.Any(pc => pc.ClientId == currentUserId))
             {
-                TempData["ShowPopup"] = true;             
+                TempData["ShowPopup"] = true;
+                if (!string.IsNullOrEmpty(returnAction) && !string.IsNullOrEmpty(returnController))
+                {
+                    return this.RedirectToAction(returnAction, returnController);
+                }
+
                 return this.RedirectToAction("Index");
           
             }
