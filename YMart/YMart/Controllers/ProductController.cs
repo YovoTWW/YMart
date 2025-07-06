@@ -93,7 +93,7 @@ namespace YMart.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(Guid id, string returnController, string returnAction)
+        public async Task<IActionResult> Details(Guid id/*, string returnController, string returnAction*/)
         {
             var model = await dbContext.Products.Where(p => p.Id == id).Where(p => p.IsDeleted == false).AsNoTracking().Select(p => new DetailedProductViewModel
             {
@@ -106,8 +106,8 @@ namespace YMart.Controllers
                 DiscountedPrice = p.DiscountedPrice,
                 DiscountPercentage = p.DiscountPercentage,
                 Quantity= p.Quantity,
-                PreviousPageAction = returnAction ?? "Index",
-                PreviousPageController = returnController ?? "Home"
+               /* PreviousPageAction = returnAction ?? "Index",
+                PreviousPageController = returnController ?? "Home"*/
             }).FirstOrDefaultAsync();
 
 
