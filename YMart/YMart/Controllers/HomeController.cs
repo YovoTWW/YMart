@@ -109,5 +109,11 @@ namespace YMart.Controllers
 
             return this.RedirectToAction("Index");
         }
+
+        public IActionResult Admin()
+        {
+            return this.View();
+        }
+
     }
 }

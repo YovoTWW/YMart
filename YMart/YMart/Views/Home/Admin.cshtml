@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Admin View Mode";
+}
+
+<style>
+    .Top {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+    .text-center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1em;
+    }
+
+    .User-Buttons {
+        padding: 2em 1.5em 2em 1.5em;
+        background: lightgreen;
+        width: 30%;
+        margin: 0 auto;
+        border-radius: 0.3em;
+        text-decoration: none;
+    }
+</style>
+
+<div class="Top">
+    <h2>@ViewData["Title"]</h2>
+</div>
+
+<div class="text-center">
+    <h1 class="display-4">Select action</h1>
+    <a asp-controller="Home" asp-action="AddBrochure" class="User-Buttons">Add a new Brochure</a>
+    <a asp-controller="Product" asp-action="Add" class="User-Buttons">Add a new Product</a>
+    <a asp-controller="Product" asp-action="Index" class="User-Buttons">Browse Products</a>
+    <a asp-controller="Home" asp-action="Index" class="User-Buttons">Home</a>
+</div>
