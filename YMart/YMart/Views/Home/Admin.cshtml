@@ -2,6 +2,14 @@
     ViewData["Title"] = "Admin View Mode";
 }
 
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    @if (!User.IsInRole("Administrator"))
+    {
+        <h2>Can only be viewed by Administrators</h2>
+    }
+</div>
+<hr />
+
 <style>
     .Top {
         display: flex;
@@ -26,14 +34,17 @@
     }
 </style>
 
-<div class="Top">
-    <h2>@ViewData["Title"]</h2>
-</div>
+@if (User.IsInRole("Administrator"))
+{
+    <div class="Top">
+        <h2>@ViewData["Title"]</h2>
+    </div>
 
-<div class="text-center">
-    <h1 class="display-4">Select action</h1>
-    <a asp-controller="Home" asp-action="AddBrochure" class="User-Buttons">Add a new Brochure</a>
-    <a asp-controller="Product" asp-action="Add" class="User-Buttons">Add a new Product</a>
-    <a asp-controller="Product" asp-action="Index" class="User-Buttons">Browse Products</a>
-    <a asp-controller="Home" asp-action="Index" class="User-Buttons">Home</a>
-</div>
+    <div class="text-center">
+        <h1 class="display-4">Select action</h1>
+        <a asp-controller="Home" asp-action="AddBrochure" class="User-Buttons">Add a new Brochure</a>
+        <a asp-controller="Product" asp-action="Add" class="User-Buttons">Add a new Product</a>
+        <a asp-controller="Product" asp-action="Index" class="User-Buttons">Browse Products</a>
+        <a asp-controller="Home" asp-action="Index" class="User-Buttons">Home</a>
+    </div>
+}
