@@ -311,6 +311,71 @@ namespace YMart.Controllers
             return this.RedirectToAction("Cart");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ConfirmPurchase(List<Guid> ProductIds, List<int> Quantities)
+        {
+            string userId = GetCurrentUserId() ?? string.Empty;
+            if (ProductIds.Count != Quantities.Count)
+            {
+                TempData["Error"] = "Invalid input.";
+                return RedirectToAction("Cart");
+            }
+
+            var products = await dbContext.Products
+                .Where(p => ProductIds.Contains(p.Id))
+                .ToListAsync();
+
+            for (int i = 0; i < ProductIds.Count; i++)
+            {
+                var productId = ProductIds[i];
+                var quantityRequested = Quantities[i];
+                var product = products.FirstOrDefault(p => p.Id == productId);
+
+                if (product == null || product.IsDeleted)
+                {
+                    TempData["Error"] = "Product not found.";
+                    return RedirectToAction("Cart");
+                }
+
+                if (quantityRequested > product.Quantity)
+                {
+                    TempData["Error"] = $"Not enough stock for {product.Name}.";
+                    return RedirectToAction("Cart");
+                }
+            }
+
+            // Proceed with "purchase" logic
+            for (int i = 0; i < ProductIds.Count; i++)
+            {
+                var productId = ProductIds[i];
+                var quantity = Quantities[i];
+                var product = products.First(p => p.Id == productId);
+
+                product.Quantity -= quantity;
+
+               /* dbContext.Orders.Add(new Order
+                {
+                    Id = Guid.NewGuid(),
+                    ClientId = userId,
+                    ProductId = productId,
+                    Quantity = quantity,
+                    OrderDate = DateTime.UtcNow
+                });*/
+
+                // Optionally: Remove from Cart if your logic includes that
+               // var cartItem = await dbContext.Products.Where(p => p.IsDeleted == false).Where(p => p.Carts.Any(pc => pc.ClientId == userId)).ToListAsync();
+                //if (cartItem != null)
+               // {
+                //    dbContext.Carts.Remove(cartItem);
+               // }
+            }
+
+            await dbContext.SaveChangesAsync();
+
+            TempData["Success"] = "Purchase successful!";
+            //return RedirectToAction("OrderConfirmation");
+            return RedirectToAction("Cart");
+        }
 
 
         private string? GetCurrentUserId()

@@ -88,7 +88,7 @@
             margin-bottom: 0;
         }
 
-    .RFC-Button {
+    .RFC-Button , .BUY-Button {
         flex-grow: 2;
         text-align: right;
     }
@@ -101,6 +101,10 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
+    <form asp-controller="Product" asp-action="ConfirmPurchase" method="post" id="purchaseForm">
+    <div class="BUY-Button" style="margin-right:35px;">
+        <button type="submit" class="btn btn-success">Purchase</button>
+    </div>
     @foreach (var product in Model)
     {
         <div class="Product-Section">
@@ -126,13 +130,15 @@
 
             <div class="Product-Quantity">
                 <h5>Quantity</h5>
-                <input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />
+                    <input type="hidden" name="ProductIds" value="@product.Id" />
+                @*<input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />*@
+                    <input type="number" name="Quantities" class="form-control quantityInput"
+                           min="0" max="@product.Quantity"  />
             </div>
 
             <div class="Product-Price">
                 <h5 class="lineTotal">0 €</h5>
             </div>
-
             <div class="RFC-Button">
                 <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-danger">Remove from Cart</button>
@@ -140,6 +146,7 @@
             </div>
         </div>
     }
+    </form>
 }
 
 <script>
