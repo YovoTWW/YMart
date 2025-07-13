@@ -294,12 +294,13 @@ namespace YMart.Controllers
 
             Product? entity = await dbContext.Products.Where(p => p.Id == id).Include(p => p.Carts).FirstOrDefaultAsync();
 
-            Cart? cart = entity.Carts.FirstOrDefault(pc => pc.ClientId == currentUserId);
-
             if (entity == null || entity.IsDeleted)
             {
                 throw new ArgumentException("Invalid id");
             }
+
+            Cart? cart = entity.Carts.FirstOrDefault(pc => pc.ClientId == currentUserId);
+ 
 
             if (cart != null)
             {
@@ -312,13 +313,20 @@ namespace YMart.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConfirmPurchase(List<Guid> ProductIds, List<int> Quantities)
+        public async Task<IActionResult> OrderConfirmation(List<Guid> ProductIds, List<int> Quantities)
         {
             string userId = GetCurrentUserId() ?? string.Empty;
+
+            if(ProductIds == null || Quantities == null || ProductIds.Count == 0 || Quantities.Count == 0)
+            {
+                ViewBag.ErrorMessage = "Cannot make a purchase with an empty cart.";
+                return View();
+            }
+
             if (ProductIds.Count != Quantities.Count)
             {
-                TempData["Error"] = "Invalid input.";
-                return RedirectToAction("Cart");
+                ViewBag.ErrorMessage = "Invalid input.";
+                return View();
             }
 
             var products = await dbContext.Products
@@ -333,14 +341,14 @@ namespace YMart.Controllers
 
                 if (product == null || product.IsDeleted)
                 {
-                    TempData["Error"] = "Product not found.";
-                    return RedirectToAction("Cart");
+                    ViewBag.ErrorMessage = "Product not found.";
+                    return View();
                 }
 
                 if (quantityRequested > product.Quantity)
                 {
-                    TempData["Error"] = $"Not enough stock for {product.Name}.";
-                    return RedirectToAction("Cart");
+                    ViewBag.ErrorMessage = $"Not enough stock for {product.Name}.";
+                    return View();
                 }
             }
 
@@ -353,28 +361,15 @@ namespace YMart.Controllers
 
                 product.Quantity -= quantity;
 
-               /* dbContext.Orders.Add(new Order
-                {
-                    Id = Guid.NewGuid(),
-                    ClientId = userId,
-                    ProductId = productId,
-                    Quantity = quantity,
-                    OrderDate = DateTime.UtcNow
-                });*/
-
-                // Optionally: Remove from Cart if your logic includes that
-               // var cartItem = await dbContext.Products.Where(p => p.IsDeleted == false).Where(p => p.Carts.Any(pc => pc.ClientId == userId)).ToListAsync();
-                //if (cartItem != null)
-               // {
-                //    dbContext.Carts.Remove(cartItem);
-               // }
             }
 
             await dbContext.SaveChangesAsync();
 
-            TempData["Success"] = "Purchase successful!";
+            //TempData["Success"] = "Purchase successful!";
             //return RedirectToAction("OrderConfirmation");
-            return RedirectToAction("Cart");
+            //return RedirectToAction("Cart");
+            ViewBag.SuccessMessage = "Purchase successful!";
+            return View();
         }
 
 

@@ -101,13 +101,13 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
-    <form asp-controller="Product" asp-action="ConfirmPurchase" method="post" id="purchaseForm">
+    <form asp-controller="Product" asp-action="OrderConfirmation" method="post" id="purchaseForm">
     <div class="BUY-Button" style="margin-right:35px;">
         <button type="submit" class="btn btn-success">Purchase</button>
     </div>
     @foreach (var product in Model)
     {
-        <div class="Product-Section">
+            <div class="Product-Section" style="@(product.Quantity <=0 ? "background-color:rgb(179, 179, 179);" : "")">
             <div class="Image-Container">
                 <img src="@(!string.IsNullOrEmpty(product.ImageURL) ? product.ImageURL : Url.Content("~/img/no-image-available-02.jpg"))" alt="@product.Name" />
             </div>
@@ -127,23 +127,32 @@
             <div class="Product-Name">
                 <h5>@product.Name</h5>
             </div>
+                @if (product.Quantity > 0)
+                {
+                    <div class="Product-Quantity">
+                        <h5>Quantity</h5>
+                        <input type="hidden" name="ProductIds" value="@product.Id" />
+                        @*<input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />*@
+                        <input type="number" name="Quantities" class="form-control quantityInput"
+                        min="1" max="@product.Quantity" value="1" />
+                    </div>
 
-            <div class="Product-Quantity">
-                <h5>Quantity</h5>
-                    <input type="hidden" name="ProductIds" value="@product.Id" />
-                @*<input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />*@
-                    <input type="number" name="Quantities" class="form-control quantityInput"
-                           min="0" max="@product.Quantity"  />
-            </div>
+                    <div class="Product-Price">
+                        <h5 class="lineTotal">0 €</h5>
+                    </div>                  
+                }
+                @if(product.Quantity<=0){                   
+                    <p style="color:red;text-align:center;font-size:1.5rem;">Out of stock</p>            
+                }
 
-            <div class="Product-Price">
-                <h5 class="lineTotal">0 €</h5>
-            </div>
-            <div class="RFC-Button">
-                <form asp-controller="Product" asp-action="RemoveFromCart" asp-route-id="@product.Id" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-danger">Remove from Cart</button>
-                </form>
-            </div>
+                <div class="RFC-Button">
+                    <button type="submit"
+                            formaction="@Url.Action("RemoveFromCart", "Product", new { id = product.Id })"
+                            formmethod="post"
+                            class="btn btn-danger">
+                        Remove from Cart
+                    </button>
+                </div>          
         </div>
     }
     </form>
@@ -157,6 +166,9 @@
 
             document.querySelectorAll(".Product-Section").forEach(section => {
                 const quantityInput = section.querySelector(".quantityInput");
+                if (!quantityInput) {
+                    return; // skip this section if no quantity input
+                }
                 const priceElement = section.querySelector(".productPrice");
                 const lineTotalElement = section.querySelector(".lineTotal");
 

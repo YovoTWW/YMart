@@ -48,6 +48,8 @@
         <div class="card-body">
             <h5 class="card-title">@Model.Name</h5>
             <hr />
+            <h6 class="card-subtitle">Available Quantity: @Model.Quantity</h6>
+            <hr />
           @*<h6 class="card-subtitle mb-2 text-muted">@Model.Price.ToString("C")</h6>*@
             <h6 class="card-subtitle mb-2 text-muted"
                style="@(Model.DiscountedPrice != Model.Price ? "text-decoration: line-through; color: gray;" : "")">
