@@ -19,15 +19,28 @@ namespace YMart.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string CategoryFilter, List<string> productNames)
+        public async Task<IActionResult> Index(List<string> CategoryFilters, List<string> productNames,string searchTextName)
         {
-            ViewData["CategoryFilter"] = CategoryFilter;
+            ViewData["CategoryFilters"] = CategoryFilters;
+            ViewData["SearchTextName"] = searchTextName;
 
             var query = dbContext.Products.Where(p => p.IsDeleted == false);
 
             if (productNames != null && productNames.Any())
             {
                 query = query.Where(p => productNames.Contains(p.Name));
+            }
+
+            if (CategoryFilters != null && CategoryFilters.Any())
+            {
+                query = query.Where(p => CategoryFilters.Contains(p.Category));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchTextName))
+            {
+                //query = query.Where(e => e.Name.Contains(searchTextName, StringComparison.OrdinalIgnoreCase));
+                var lowerSearch = searchTextName.ToLower();
+                query = query.Where(e => e.Name.ToLower().Contains(lowerSearch));
             }
 
             var model = await query
@@ -43,13 +56,7 @@ namespace YMart.Controllers
                         Category = p.Category
                     }).AsNoTracking().ToListAsync();
 
-                if (!string.IsNullOrEmpty(CategoryFilter) && CategoryFilter != "All")
-                {
-                    model = model.Where(p => p.Category == CategoryFilter).ToList();          
-                }
-
-                return this.View(model);
-            
+            return this.View(model);           
         }
 
         [HttpGet]

@@ -4,9 +4,8 @@
 @model IEnumerable<BasicProductViewModel>
 
 @{
-    string categoryFilter = ViewData["CategoryFilter"] as string ?? "All";
-    ViewData["Title"] = "Products List";
-    
+    string searchTextName = ViewData["SearchTextName"] as string ?? string.Empty;
+    ViewData["Title"] = "Products List";  
 }
 
 
@@ -32,18 +31,37 @@
     }
 </style>
 
-<div class="Info-Container">
-<div class="Top-Text">
-    <h2>@ViewData["Title"]</h2>
-</div>
-<form method="get" class="Categories">
-        <button type="submit" class="User-Buttons" name="categoryFilter" value="All" >All</button>
-        @foreach(var category in Categories)
+<form method="get" class="mb-4">
+    <div class="row mb-2" style="margin-top:30px;">
+        <div class="col">
+            <input type="text"
+                   name="searchTextName"
+                   class="form-control"
+                   placeholder="Search by Name"
+                   value="@ViewData["SearchTextName"]">
+        </div>
+    </div>
+
+    <div class="mb-2">
+        <h5>Categories</h5>
+        @foreach (var category in Categories)
         {
-           <button type="submit" class="User-Buttons" name="categoryFilter" value="@category">@category</button>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input"
+                       type="checkbox"
+                       name="CategoryFilters"
+                       value="@category"
+                       id="category_@category"
+                @(ViewData["CategoryFilters"] is List<string> selectedCategories && selectedCategories.Contains(category) ? "checked" : "") />
+                <label class="form-check-label" for="category_@category">@category</label>
+            </div>
         }
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">
+        <i class="bi bi-search"></i> Apply Filters
+    </button>
 </form>
-</div>
 <hr />
 
         <div class="Product-Row">
