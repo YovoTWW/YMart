@@ -14,6 +14,9 @@
   <ItemGroup>
     <None Include="wwwroot\css\products.css" />
     <None Include="wwwroot\css\style.css" />
+    <None Include="wwwroot\images\Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
