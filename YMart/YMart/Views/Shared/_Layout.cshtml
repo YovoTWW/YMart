@@ -17,9 +17,11 @@
 
     header{
         height:80px;
+        border-bottom: 1px solid black;
     }
     .navbar{
         height:100%;
+        background-image: url('/images/stylized_white.png');
     }
     .navbar-brand{
         font-size:2rem;
@@ -35,7 +37,10 @@
         text-decoration:none;
     }
 
-
+    footer{
+        background-image: url('/images/stylized_white.png');
+        border-top: 1px solid black;
+    }
 </style>
 
 
@@ -88,9 +93,9 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - YMart - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-muted">
+        <div class="container" style="color:black;font:bolder;">
+            &copy; 2025 - YMart
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -12,35 +12,18 @@
 <link rel="stylesheet" href ="~/css/style.css" />
 <link rel="stylesheet" href="~/css/products.css"/>
 <style>
-    .out-of-stock-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 80%;
-        background-color: rgba(128, 128, 128, 0.6); 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        font-size: 1.5rem;
-        text-transform: uppercase;
-        border-radius: 0.375rem; 
-        z-index: 10;
-    }
-
-    body{
-        background-image:url('/images/Background.png');
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+    
+    #filters{
+        background-image:url('/images/stylized_white.png');
+        padding:10px;
+        margin-top:10px;
+        border-radius:0.375rem;
     }
 </style>
 
 
-<form method="get" class="mb-4">
-    <div class="row mb-2" style="margin-top:30px;">
+<form method="get" class="mb-4" id="filters">
+    <div class="row mb-2" >
         <div class="col">
             <input type="text"
                    name="searchTextName"
@@ -51,7 +34,7 @@
     </div>
 
     <div class="mb-2">
-        <h5 style="color:green">Categories</h5>
+        <h5 >Categories</h5>
         @foreach (var category in Categories)
         {
             <div class="form-check form-check-inline">
@@ -61,7 +44,7 @@
                        value="@category"
                        id="category_@category"
                 @(ViewData["CategoryFilters"] is List<string> selectedCategories && selectedCategories.Contains(category) ? "checked" : "") />
-                <label class="form-check-label" for="category_@category" style="color:green">@category</label>
+                <label class="form-check-label" for="category_@category" >@category</label>
             </div>
         }
     </div>
