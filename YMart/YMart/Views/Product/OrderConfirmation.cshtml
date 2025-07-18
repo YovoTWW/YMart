@@ -1,4 +1,13 @@
-﻿@if (ViewBag.SuccessMessage != null)
+﻿<style>
+    body {
+        background-image: url('/images/stylized_white_2.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
+@if (ViewBag.SuccessMessage != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         @ViewBag.SuccessMessage

@@ -10,10 +10,11 @@
 <link rel="stylesheet" href="~/css/style.css" />
 <link rel="stylesheet" href="~/css/products.css" />
 
-<div class="text-center">
+
+<div class="text-center" style="margin-top:30px;margin-bottom:30px;">
     @*<h1 class="display-4">Welcome to YMart</h1>*@
-    <img src ="~/images/Welcome.png/" style="width:800px;height:200px; object-fit:contain;">
-    <div id="slider-container" style="text-align:center;">
+    <img src="~/images/Welcome.png" style="width:1296px; height:350px;">
+    <div id="slider-container" style="text-align:center;margin-top:30px;">
         <a id="brochure-link" href="#">
             <img id="brochure-image" src="" alt="Brochure Image" style="width:1296px; height:350px;" />
         </a>
@@ -28,8 +29,9 @@
 <br />
 <br />
 
-<h2 style="background-image: url('/images/stylized_white.png');">Current Offers</h2>
-<br />
+@*<h2 style="background-image: url('/images/stylized_white.png');">Current Offers</h2>*@
+<img src="~/images/Offers.png" style="width:450px; height:150px;margin-bottom:30px;">
+<hr />
 
 <div class="Product-Row">
     @foreach (var product in Model.Offers)
