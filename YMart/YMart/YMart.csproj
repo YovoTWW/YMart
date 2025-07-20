@@ -9,9 +9,11 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\css\products.css" />
+    <Content Remove="wwwroot\css\productsResponsive.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\productsResponsive.css" />
     <None Include="wwwroot\css\products.css" />
     <None Include="wwwroot\css\style.css" />
     <None Include="wwwroot\images\Background.png">

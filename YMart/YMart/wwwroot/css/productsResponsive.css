@@ -1,0 +1,46 @@
+﻿@media (max-width:1400px){
+    .Product-Box {  
+        min-width: 29%;
+        max-width: 31%;     
+    }
+
+    .card-title {
+        font-size:1rem;
+    }
+}
+
+@media (max-width:1200px){
+    .Product-Box {
+        min-width: 30%;
+        max-width: 30%;
+    }
+}
+
+@media (max-width:1000px) {
+    .card-body {
+        font-size:0.9rem;
+    }
+}
+
+@media (max-width:800px) {
+    .Product-Box {
+        min-width: 29%;
+        max-width: 29%;
+    }
+
+
+    .card-body, .Buttons-Div {
+        font-size: 0.75rem;
+    }
+
+    .card-title {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width:600px) {
+        .card-body, .Buttons-Div {
+            font-size: 0.65rem;
+        }
+
+}
