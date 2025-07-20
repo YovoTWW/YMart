@@ -1,0 +1,71 @@
+@media (min-width:1400px) {
+    #brochure-image, #welcome-image {
+        width: 1296px;
+        height: 350px;
+    }
+
+    #offers-image {
+        width: 450px;
+        height: 150px;
+    }
+}
+
+@media (max-width:1400px) {
+    #brochure-image, #welcome-image {
+        width: 950px;
+        height: 300px;
+    }
+
+    #offers-image {
+        width: 400px;
+        height: 150px;
+    }
+}
+
+@media (max-width:1000px) {
+    #brochure-image, #welcome-image {
+        width: 725px;
+        height: 250px;
+    }
+
+    #offers-image {
+        width: 350px;
+        height: 150px;
+    }
+}
+
+@media (max-width:800px) {
+    #brochure-image, #welcome-image {
+        width: 535px;
+        height: 225px;
+    }
+
+    #offers-image {
+        width: 300px;
+        height: 100px;
+    }
+}
+
+@media (max-width:600px) {
+    #brochure-image, #welcome-image {
+        width: 380px;
+        height: 200px;
+    }
+
+    #offers-image {
+        width: 250px;
+        height: 85px;
+    }
+}
+
+@media (max-width:400px) {
+    #brochure-image, #welcome-image {
+        width: 300px;
+        height: 175px;
+    }
+
+    #offers-image {
+        width: 200px;
+        height: 65px;
+    }
+}
