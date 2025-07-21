@@ -1,0 +1,51 @@
+@media (max-width:1000px){
+    .navbar-brand {
+        font-size: 1.8rem;
+    }
+
+    a{
+        font-size:0.8rem;
+    }
+}
+
+@media (max-width:800px) {
+    .navbar-brand {
+        font-size: 1.7rem;
+    }
+
+    a {
+        font-size: 0.7rem;
+    }
+
+    #Cart-Button{
+        font-size:40px;
+    }
+}
+
+@media (max-width:600px) {
+    .navbar-brand {
+        font-size: 1.6rem;
+    }
+
+    a {
+        font-size: 0.6rem;
+    }
+
+    #Cart-Button {
+        font-size: 35px;
+    }
+}
+
+@media (max-width:400px) {
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    a {
+        font-size: 0.5rem;
+    }
+
+    #Cart-Button {
+        font-size: 30px;
+    }
+}

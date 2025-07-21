@@ -1,0 +1,28 @@
+header {
+    height: 80px;
+    border-bottom: 1px solid black;
+}
+
+.navbar {
+    height: 100%;
+    background-image: url('/images/stylized_white.png');
+}
+
+.navbar-brand {
+    font-size: 2rem;
+}
+
+.container-fluid {
+    max-width: 80%;
+}
+
+#Cart-Button {
+    margin-right: 20px;
+    font-size: 50px;
+    text-decoration: none;
+}
+
+footer {
+    background-image: url('/images/stylized_white.png');
+    border-top: 1px solid black;
+}
