@@ -28,7 +28,7 @@
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
     <form asp-controller="Product" asp-action="OrderConfirmation" method="post" id="purchaseForm">
-    <div class="BUY-Button" style="margin-right:35px;">
+    <div class="BUY-Button" style="margin-bottom:35px;">
         <button type="submit" class="btn btn-success">Purchase</button>
     </div>
     @foreach (var product in Model)
@@ -58,7 +58,6 @@
                     <div class="Product-Quantity">
                         <h5>Quantity</h5>
                         <input type="hidden" name="ProductIds" value="@product.Id" />
-                        @*<input class="form-control quantityInput" type="number" min="1" max="@product.Quantity" value="1" />*@
                         <input id="quantity-input" type="number" name="Quantities" class="form-control quantityInput"
                         min="1" max="@product.Quantity" value="1" />
                     </div>

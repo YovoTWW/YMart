@@ -5,7 +5,7 @@
 
     h6{
         font-size:0.95rem;
-    }
+    }    
 }
 
 @media (max-width:1200px) {
@@ -16,6 +16,7 @@
     h6 {
         font-size: 0.85rem;
     }
+    
 }
 
 @media (max-width:1000px) {
@@ -25,5 +26,70 @@
 
     h6 {
         font-size: 0.75rem;
+    }
+
+
+    #quantity-input, input[type="number"] {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width:800px) {
+    h5 {
+        font-size: 0.8rem;
+    }
+
+    h6 {
+        font-size: 0.65rem;
+    }
+
+
+    #quantity-input, input[type="number"] {
+        font-size: 0.65rem;
+    }
+
+    .Image-Container {
+        width: 165px;
+        max-width: 165px;
+    }
+
+    .Image-Container img {          
+        max-height: 70px;
+     }
+}
+
+@media (max-width:600px) {
+    h5 {
+        font-size: 0.7rem;
+    }
+
+    h6 {
+        font-size: 0.55rem;
+    }
+
+    #quantity-input, input[type="number"] {
+        font-size: 0.55rem;
+    }
+
+    .out-of-stock-overlay {
+        width: 82%;
+    }
+}
+
+@media (max-width:400px) {
+    h5 {
+        font-size: 0.6rem;
+    }
+
+    h6 {
+        font-size: 0.45rem;
+    }
+
+    #quantity-input, input[type="number"] {
+        font-size: 0.4rem;
+    }
+
+    .out-of-stock-overlay {
+        width: 78%;
     }
 }
