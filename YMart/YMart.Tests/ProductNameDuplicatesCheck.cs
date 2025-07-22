@@ -4,24 +4,30 @@ using Microsoft.Extensions.Configuration;
 
 namespace YMart.Tests
 {
-    public class ProductNameDuplicatesCheck
+    public class ProductNameDuplicatesCheck : IClassFixture<TestDatabaseFixture>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public ProductNameDuplicatesCheck()
+        /* public ProductNameDuplicatesCheck()
+         {
+             var config = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
+                  .Build();
+
+             var connectionString = config.GetConnectionString("SqlServer");
+
+             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                 .UseSqlServer(connectionString)
+                 .Options;
+
+             _dbContext = new ApplicationDbContext(options);
+         }
+        */
+
+        public ProductNameDuplicatesCheck(TestDatabaseFixture fixture)
         {
-            var config = new ConfigurationBuilder()
-                 .SetBasePath(Directory.GetCurrentDirectory())
-                 .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-                 .Build();
-
-            var connectionString = config.GetConnectionString("SqlServer");
-
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-
-            _dbContext = new ApplicationDbContext(options);
+            _dbContext = fixture.DbContext;
         }
 
         [Fact]

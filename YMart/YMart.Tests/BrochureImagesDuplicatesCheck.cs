@@ -4,24 +4,29 @@ using YMart.Data;
 
 namespace YMart.Tests
 {
-    public class BrochureImagesDuplicatesCheck
+    public class BrochureImagesDuplicatesCheck : IClassFixture<TestDatabaseFixture>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public BrochureImagesDuplicatesCheck()
+        /* public BrochureImagesDuplicatesCheck()
+         {
+             var config = new ConfigurationBuilder()
+                  .SetBasePath(Directory.GetCurrentDirectory())
+                  .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
+                  .Build();
+
+             var connectionString = config.GetConnectionString("SqlServer");
+
+             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                 .UseSqlServer(connectionString)
+                 .Options;
+
+             _dbContext = new ApplicationDbContext(options);
+         }*/
+
+        public BrochureImagesDuplicatesCheck(TestDatabaseFixture fixture)
         {
-            var config = new ConfigurationBuilder()
-                 .SetBasePath(Directory.GetCurrentDirectory())
-                 .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-                 .Build();
-
-            var connectionString = config.GetConnectionString("SqlServer");
-
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer(connectionString)
-                .Options;
-
-            _dbContext = new ApplicationDbContext(options);
+            _dbContext = fixture.DbContext;
         }
 
         [Fact]

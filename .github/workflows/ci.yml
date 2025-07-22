@@ -13,6 +13,20 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          SA_PASSWORD: "YMartDocker1!"
+          ACCEPT_EULA: "Y"
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "echo 'SELECT 1' | /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YMartDocker1!" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 3
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +34,19 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
+      - name: Wait for SQL Server to be ready
+        run: |
+          for i in {1..30};
+          do
+            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YMartDocker1! -Q "SELECT 1"
+            if [ $? -eq 0 ]; then
+              echo "SQL Server is ready!"
+              break
+            fi
+            echo "Waiting for SQL Server to be available..."
+            sleep 2
+          done
 
       - name: Restore dependencies
         run: dotnet restore
@@ -29,6 +56,6 @@ jobs:
         run: dotnet build --no-restore
         working-directory: ./YMart
 
-      - name: Test
+      - name: Run tests
         run: dotnet test --no-build --verbosity normal
-        working-directory: ./YMart
+        working-directory: ./YMart.Tests
