@@ -35,19 +35,6 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Wait for SQL Server to be ready
-        run: |
-          for i in {1..30};
-          do
-            /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YMartDocker1! -Q "SELECT 1"
-            if [ $? -eq 0 ]; then
-              echo "SQL Server is ready!"
-              break
-            fi
-            echo "Waiting for SQL Server to be available..."
-            sleep 2
-          done
-
       - name: Restore dependencies
         run: dotnet restore
         working-directory: ./YMart
