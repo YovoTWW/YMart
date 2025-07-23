@@ -4,26 +4,12 @@ using YMart.Data;
 
 namespace YMart.Tests
 {
+    [Collection("Database collection")]
     public class ProductImagesDuplicatesCheck : IClassFixture<TestDatabaseFixture>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        /* public ProductImagesDuplicatesCheck()
-         {
-             var config = new ConfigurationBuilder()
-                  .SetBasePath(Directory.GetCurrentDirectory())
-                  .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-                  .Build();
-
-             var connectionString = config.GetConnectionString("SqlServer");
-
-             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                 .UseSqlServer(connectionString)
-                 .Options;
-
-             _dbContext = new ApplicationDbContext(options);
-         }*/
-
+       
         public ProductImagesDuplicatesCheck(TestDatabaseFixture fixture)
         {
             _dbContext = fixture.DbContext;

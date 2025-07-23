@@ -4,6 +4,7 @@ using YMart.Data;
 
 namespace YMart.Tests
 {
+    [Collection("Database collection")]
     public class BrochureImagesDuplicatesCheck : IClassFixture<TestDatabaseFixture>
     {
         private readonly ApplicationDbContext _dbContext;
