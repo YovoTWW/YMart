@@ -8,22 +8,7 @@ namespace YMart.Tests
     {
         private readonly ApplicationDbContext _dbContext;
 
-        /* public BrochureImagesDuplicatesCheck()
-         {
-             var config = new ConfigurationBuilder()
-                  .SetBasePath(Directory.GetCurrentDirectory())
-                  .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-                  .Build();
-
-             var connectionString = config.GetConnectionString("SqlServer");
-
-             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                 .UseSqlServer(connectionString)
-                 .Options;
-
-             _dbContext = new ApplicationDbContext(options);
-         }*/
-
+      
         public BrochureImagesDuplicatesCheck(TestDatabaseFixture fixture)
         {
             _dbContext = fixture.DbContext;
