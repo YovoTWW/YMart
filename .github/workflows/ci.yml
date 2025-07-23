@@ -45,4 +45,4 @@ jobs:
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal
-        working-directory: ./YMart.Tests
+        working-directory: ./YMart
