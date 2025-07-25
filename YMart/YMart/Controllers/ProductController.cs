@@ -338,7 +338,8 @@ namespace YMart.Controllers
                 .Where(p => ProductIds.Contains(p.Id))
                 .ToListAsync();
 
-            //Dictionary<string, int> orderItems = new Dictionary<string, int>();
+            List<decimal> ItemPrices = new List<decimal>();
+
             List<string> ItemNames = new List<string>();
 
             List<int> ItemQuantities = new List<int>();
@@ -370,7 +371,8 @@ namespace YMart.Controllers
                 var quantity = Quantities[i];
                 var product = products.First(p => p.Id == productId);
 
-                //orderItems.Add(product.Name,quantity);
+
+                ItemPrices.Add(product.DiscountedPrice);
                 ItemNames.Add(product.Name);
                 ItemQuantities.Add(quantity);
                 totalPrice += product.DiscountedPrice * quantity;
@@ -381,6 +383,7 @@ namespace YMart.Controllers
 
             Order order = new Order
             {
+                ItemPrices = ItemPrices,
                 ItemNames = ItemNames,
                 ItemQuantities = ItemQuantities,
                 TotalPrice = totalPrice,
@@ -392,9 +395,6 @@ namespace YMart.Controllers
             await dbContext.Orders.AddAsync(order);
             await dbContext.SaveChangesAsync();
 
-            //TempData["Success"] = "Purchase successful!";
-            //return RedirectToAction("OrderConfirmation");
-            //return RedirectToAction("Cart");
             ViewBag.SuccessMessage = "Purchase successful!";
             return View();
         }
@@ -426,6 +426,7 @@ namespace YMart.Controllers
                     {
                         Id = o.Id,
                         ClientEmail = o.ClientEmail,
+                        ItemPrices = o.ItemPrices,
                         ItemNames = o.ItemNames,
                         ItemQuantities = o.ItemQuantities,
                         TotalPrice = o.TotalPrice,

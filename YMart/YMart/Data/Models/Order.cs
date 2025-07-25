@@ -11,10 +11,8 @@ namespace YMart.Data.Models
 
         [Key]
         public Guid Id { get; set; }
-
-        //public Dictionary<string,int> Items { get; set; }
+        public List<decimal> ItemPrices { get; set; }
         public List<string> ItemNames { get; set; }
-
         public List<int> ItemQuantities { get; set; }
 
         public DateTime OrderTime { get; set; }
