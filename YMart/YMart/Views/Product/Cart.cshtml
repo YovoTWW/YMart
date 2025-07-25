@@ -27,6 +27,7 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
+    <a asp-controller="Product" asp-action="UserOrders" class="btn btn-info">Purchase History</a>
     <form asp-controller="Product" asp-action="OrderConfirmation" method="post" id="purchaseForm">
     <div class="BUY-Button" style="margin-bottom:35px;">
         <button type="submit" class="btn btn-success">Purchase</button>

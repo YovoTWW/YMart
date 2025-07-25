@@ -1,0 +1,55 @@
+﻿@using YMart.ViewModels.Order;
+@model IEnumerable<MiniOrderViewModel>
+
+@{
+    ViewData["Title"] = "User Orders";
+}
+
+<style>
+    .div-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    }
+
+    .Order-Box{
+        background-color: peru;
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    body {
+        background-image: url('/images/stylized_white_2.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    </style>
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    @if (User?.Identity?.IsAuthenticated ?? false)
+    {
+        <h2>@ViewData["Title"]</h2>
+    }
+    else
+    {
+        <h2>Can only be viewed by Logged in Users</h2>
+    }
+</div>
+<hr />
+
+@if (User?.Identity?.IsAuthenticated ?? false)
+{
+    <div class="div-container">
+        @foreach (var order in Model)
+        {
+        <div class="Order-Box">  
+        <p>Order ID : @order.Id</p>
+        <p>Order Time : @order.OrderTime</p>
+        <p>Total Price : @order.TotalPrice  €</p>
+        <a asp-controller="Product" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-info">Details</a>
+        </div>
+        }
+    </div>
+}

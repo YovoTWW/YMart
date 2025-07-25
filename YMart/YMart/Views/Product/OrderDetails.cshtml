@@ -1,0 +1,60 @@
+﻿@using YMart.ViewModels.Order;
+@model OrderViewModel
+
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<link rel="stylesheet" href="~/css/style.css" />
+<style>
+
+    .row {
+        display: flex;
+        gap: 3rem;
+    }
+
+    #dp-text {
+        color: red;
+        margin-bottom: 0.5rem;
+    }
+
+    body {
+        background-image: url('/images/stylized_white_2.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+</style>
+
+<div class="Top">
+    <h2 id="Title">@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row justify-content-center" style="margin: 0 auto; margin-top:50px;">
+    <div class="col-md-8" style="max-width:650px;">
+        <div class="card-body">
+            <h6 class="card-subtitle">User Email : @Model.ClientEmail</h6>
+            <hr />
+            <h6 class="card-title">Order ID : @Model.Id</h6>
+            <hr />
+            <h6 class="card-title">Order Date : @Model.OrderTime</h6>
+            <hr />
+            <h6 class="card-title">Total Price : @Model.TotalPrice €</h6>
+            <hr />
+            <h6 class="card-subtitle">Items Ordered : </h6>
+            <hr />
+            @for(int i = 0; i < @Model.ItemNames.Count; i++)
+            {
+                <div>
+                    <p>| @Model.ItemNames[i] | x @Model.ItemQuantities[i]</p>
+                </div>
+            }
+            <hr />
+        </div>
+        <div class="card-footer text-center">        
+            <button type="button" onclick="history.back()" class="User-Buttons" id="yellow"><i class="bi bi-arrow-bar-left"></i>Back</button>
+        </div>
+        <br />
+    </div>
+</div>

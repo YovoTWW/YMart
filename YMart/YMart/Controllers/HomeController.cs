@@ -5,13 +5,14 @@ using YMart.Data;
 using YMart.Data.Models;
 using YMart.Models;
 using YMart.ViewModels.Brochure;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using YMart.ViewModels.Product;
 using YMart.ViewModels.HomePage;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic;
+using YMart.ViewModels.Order;
 
 namespace YMart.Controllers
 {
+    using static YMart.Constants.DataConstants;
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -27,16 +28,6 @@ namespace YMart.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            /*var model = await dbContext.Brochure.Where(b => b.IsActive == true)
-                .Select(b => new AddBrochureViewModel()
-                {
-                    ImageURL = b.ImageURL,
-                    ProductNames = b.ProductNames
-                }).AsNoTracking().ToListAsync();
-
-            return this.View(model);*/
-
-
             var Brochures = await dbContext.Brochure.Where(b => b.IsActive == true)
                 .Select(b => new AddBrochureViewModel()
                 {
@@ -213,6 +204,20 @@ namespace YMart.Controllers
             }
 
             return this.RedirectToAction("BrochureList");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AllOrders()
+        {          
+            var model = await dbContext.Orders
+                    .Select(o => new MiniOrderViewModel()
+                    {
+                        Id = o.Id,
+                        TotalPrice = o.TotalPrice,
+                        OrderTime = o.OrderTime.ToString(DateFormat)
+                    }).AsNoTracking().ToListAsync();
+
+            return this.View(model);
         }
 
         public IActionResult Admin()
