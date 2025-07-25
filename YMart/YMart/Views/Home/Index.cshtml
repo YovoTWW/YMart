@@ -64,13 +64,10 @@
                     </p>
                     <div class="Buttons-Div">
                         <a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" class="User-Buttons" id="cyan">Details</a>
-                        @*@<a asp-controller="Product" asp-action="Details" asp-route-id="@product.Id" asp-route-returnController="@ViewContext.RouteData.Values["controller"]" asp-route-returnAction="@ViewContext.RouteData.Values["action"]" class="User-Buttons" id="cyan">Details</a>*@
                         @if (User?.Identity?.IsAuthenticated == true)
                         {
-                            <form asp-controller="Product" asp-action="AddToCart" method="post">
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
                                 <input type="hidden" name="id" value="@product.Id"  />
-                                <input type="hidden" name="returnAction" value="@ViewContext.RouteData.Values["action"]" />
-                                <input type="hidden" name="returnController" value="@ViewContext.RouteData.Values["controller"]" />
                                 <button type="submit" class="User-Buttons" id="green"><i class="bi bi-cart"></i>Add to Cart</button>
                             </form>
                         }

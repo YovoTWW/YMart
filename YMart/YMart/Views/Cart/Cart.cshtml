@@ -27,8 +27,8 @@
 
 @if (User?.Identity?.IsAuthenticated ?? false)
 {
-    <a asp-controller="Product" asp-action="UserOrders" class="btn btn-info">Purchase History</a>
-    <form asp-controller="Product" asp-action="OrderConfirmation" method="post" id="purchaseForm">
+    <a asp-controller="Order" asp-action="UserOrders" class="btn btn-info">Purchase History</a>
+    <form asp-controller="Order" asp-action="OrderConfirmation" method="post" id="purchaseForm">
     <div class="BUY-Button" style="margin-bottom:35px;">
         <button type="submit" class="btn btn-success">Purchase</button>
     </div>
@@ -70,7 +70,7 @@
 
                 <div class="RFC-Button">
                     <button type="submit"
-                            formaction="@Url.Action("RemoveFromCart", "Product", new { id = product.Id })"
+                            formaction="@Url.Action("RemoveFromCart", "Cart", new { id = product.Id })"
                             formmethod="post"
                             class="btn btn-danger">
                         Remove from Cart

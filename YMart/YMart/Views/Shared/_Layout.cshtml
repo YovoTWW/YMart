@@ -38,7 +38,7 @@
                     </ul>
                     @if (User?.Identity?.IsAuthenticated ?? false)
                     {                     
-                            ControllerName = "Product";
+                            ControllerName = "Cart";
                             ActionName = "Cart";                 
                     }                            
                     <a class="nav-link text-dark" asp-area="" asp-controller="@ControllerName" asp-action="@ActionName"> <i class="bi bi-cart" id="Cart-Button"></i></a>                

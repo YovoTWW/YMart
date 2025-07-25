@@ -48,7 +48,7 @@
                 <p>Order ID : @order.Id</p>
                 <p>Order Time : @order.OrderTime</p>
                 <p>Total Price : @order.TotalPrice  €</p>
-                <a asp-controller="Product" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-info">Details</a>
+                <a asp-controller="Order" asp-action="OrderDetails" asp-route-id="@order.Id" class="btn btn-info">Details</a>
             </div>
         }
     </div>
