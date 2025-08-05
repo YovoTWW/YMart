@@ -21,15 +21,9 @@ namespace YMart.Tests
                 .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var connectionString = config.GetConnectionString("DockerSqlServer");
+            var connectionString = config.GetConnectionString("AzureConnection");
 
             Console.WriteLine($"Using connection string: {connectionString}");
-
-            // Drop the existing test DB if it exists
-            DropDatabaseIfExists(connectionString);
-
-            // Wait a bit to make sure DB is fully dropped
-            Thread.Sleep(2000); // optional, useful in Docker
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlServer(connectionString)
@@ -37,41 +31,9 @@ namespace YMart.Tests
 
             DbContext = new ApplicationDbContext(options);
 
-            Console.WriteLine("Applying migrations...");
+            Console.WriteLine("Applying migrations (Azure)...");
             DbContext.Database.Migrate();
             Console.WriteLine("Migrations applied.");
-        }
-
-        private void DropDatabaseIfExists(string connectionString)
-        {
-            var builder = new SqlConnectionStringBuilder(connectionString);
-            var dbName = builder.InitialCatalog;
-
-            // Connect to master
-            builder.InitialCatalog = "master";
-
-            try
-            {
-                using var connection = new SqlConnection(builder.ConnectionString);
-                connection.Open();
-
-                using var command = connection.CreateCommand();
-                command.CommandText = $@"
-                    IF EXISTS (SELECT name FROM sys.databases WHERE name = N'{dbName}')
-                    BEGIN
-                        ALTER DATABASE [{dbName}] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-                        DROP DATABASE [{dbName}];
-                    END";
-
-                Console.WriteLine($"Attempting to drop database: {dbName}");
-                command.ExecuteNonQuery();
-                Console.WriteLine($"Database '{dbName}' dropped successfully.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error dropping database '{dbName}': {ex.Message}");
-                throw;
-            }
         }
 
         public void Dispose()
