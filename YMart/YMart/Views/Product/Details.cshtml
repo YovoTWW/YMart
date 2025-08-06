@@ -81,6 +81,8 @@
                 }
                 <form asp-controller="@ControllerName" asp-action="@ActionName" method="post">
                         <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="returnAction" value="Index" />
+                    <input type="hidden" name="returnController" value="Product" />
                     <button type="submit" class="User-Buttons" id="green"><i class="bi bi-cart"></i>Add to Cart</button>
                     </form>
              </div>

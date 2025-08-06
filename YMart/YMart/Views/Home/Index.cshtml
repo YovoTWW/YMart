@@ -68,6 +68,8 @@
                         {
                             <form asp-controller="Cart" asp-action="AddToCart" method="post">
                                 <input type="hidden" name="id" value="@product.Id"  />
+                                <input type="hidden" name="returnAction" value="@ViewContext.RouteData.Values["action"]" />
+                                <input type="hidden" name="returnController" value="@ViewContext.RouteData.Values["controller"]" />
                                 <button type="submit" class="User-Buttons" id="green"><i class="bi bi-cart"></i>Add to Cart</button>
                             </form>
                         }
