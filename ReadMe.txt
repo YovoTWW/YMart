@@ -1,1 +1,1 @@
-Ако ще бъде пулван проекта ,при миграциите за свързващите таблици (EventsAccounts,EventsProfiles , etc.), 'onDelete: ReferentialAction.Cascade' трябва да се смени на 'onDelete: ReferentialAction.NoAction' ръчно.
+Ако ще бъде пулван проекта , при миграциите за свързващите таблици (EventsAccounts,EventsProfiles , etc.), 'onDelete: ReferentialAction.Cascade' трябва да се смени на 'onDelete: ReferentialAction.NoAction' ръчно.
