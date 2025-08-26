@@ -24,12 +24,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build --configuration Release
-        working-directory: ./YMart
+        run: dotnet build ./YMart/YMart.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish -c Release -o "${{env.DOTNET_ROOT}}/myapp"
-        working-directory: ./YMart
+        run: dotnet publish ./YMart/YMart.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -66,3 +64,4 @@ jobs:
           package: .
 
           
+
