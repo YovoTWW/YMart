@@ -22,8 +22,9 @@ When creating migrations for connecting tables (EventsAccounts,EventsProfiles , 
 this line in Program.cs :"string email = "yovo352@gmail.com";"). You might get an error related to use roles when launching the app for the 1st time , just launch it again and it should work.
 
 (Optional) Creating a docker image and container :
--For the docker image to work the app needs to connect to the Azure database by using the "AzureConnection" connection string , like the default in the github repo. Make sure you have Docker Desktop open . From the dropdown menu with the green arrow at the top of the
+- For the docker image to work the app needs to connect to the Azure database by using the "AzureConnection" connection string , like the default in the github repo. Make sure you have Docker Desktop open . From the dropdown menu with the green arrow at the top of the
 Visual Studio UI select Docker and run the app. You should see a docker image and a docker container created on Docker Desktop . While the app is running click on the localhost link from the newly created docker container.
 
 Notes for the Azure Live Demo:
-If you get an error when clicking an azure link, try opening the link again in 10-15 minutes, since the database is on a serverless plan and has periodic pauses.
+- Link : ymart.azurewebsites.net
+- If you get an error when clicking the azure link, try opening the link again in 10-15 minutes, since the database is on a serverless plan and has periodic pauses.
