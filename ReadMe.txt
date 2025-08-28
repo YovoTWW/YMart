@@ -1,5 +1,5 @@
 Overview : 
-ASP .NET Web Application showcasing a functioning online marketplace .
+ASP .NET Web Application with a Microsoft Azure SQL Database showcasing a functioning online marketplace .
 
 Features:
 - Users that have created and logged in to their accounts have access to the shopping cart for placing products to buy (no payment methods are used , since this is a project for showcasing functionalities) . They can also view their order history in the User Orders page.
