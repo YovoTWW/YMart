@@ -73,7 +73,7 @@ namespace YMart
             {
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-                string email = "yovo352@gmail.com";
+                string email = "admin@gmail.com";
 
                 var users = await userManager.Users.ToListAsync();
 
