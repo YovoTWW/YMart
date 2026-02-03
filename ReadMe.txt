@@ -16,10 +16,12 @@ Prerequisites for running the project locally:
 - (Optional) Docker and Docker Desktop
 
 Running the app after installation :
-- After pulling the project from GitHub, if you wish to create a local database instead of using the Azure database, go to the appsettings.Development.json file in the YMart project folder (not YMart.Tests) and edit the SqlServer connection string to something like this "Server=DESKTOP-...;Database=YMartDb;Trusted_Connection=True;TrustServerCertificate=True;" and make sure you are connected to your local SQL instance . After that in the Program.cs file edit this line : "var connectionString = builder.Configuration.GetConnectionString("AzureConnection") ?? throw new InvalidOperationException("Connection string not found.");" to replace "AzureConnection" to "SqlServer". Open the Package Manager Console and write "add-migration Initial".
-When creating migrations for connecting tables , '...: ReferentialAction.Cascade' needs to be changed to '...: ReferentialAction.NoAction' manually. After that open the Package Manager Console again and write
-"update-database". After that you should have a working web app with an empty database . If you wish to fill the database with data , you can do it manually through SQL or register as admin@gmail.com and have admin privileges (you can change the admin e-mail by editing
-this line in Program.cs :"string email = "admin@gmail.com";"). You might get an error related to user roles when launching the app for the 1st time or not see the links to the admin only pages on the top left corner of the site , just launch it again and log out and log in and it should work.
+- After pulling the project from GitHub, make sure you are connected to your local MS SQL Server instance . Open the Package Manager Console again and write "update-database". After that you should have a working web app with a database with automatically seeded data . If you wish to fill the database with more data , you can do it manually through SQL or register as admin@gmail.com (!!! You must click on the confirm e-mail button when registering , if you do not you might have to change the name of the admin e-mail through a line of code) and have admin privileges (you can change the admin e-mail by editing this line in Program.cs :"string email = "admin@gmail.com";"). You might get an error related to user roles when launching the app for the 1st time or not see the links to the admin only pages on the top left corner of the site , just launch it again and log out and log in and it should work.
+
+Notes for using an Azure Database:
+- (The Azure Database might be disabled for cost related reasons)
+- You can switch to using the Azure Database by commenting this line (number 14) in Program.cs : "var connectionString = builder.Configuration.GetConnectionString("SqlServer") ?? throw new InvalidOperationException("Connection string not found.");" and uncommenting the line below it (number 15) , or by simply replacint the "SqlServer" input string with "AzureConnection".
+- If you wish to use your own Azure Database for the project you can edit the connection string appsettings.Development.json
 
 (Optional) Creating a docker image and container :
 - (Might not work if the Azure Database has been disabled for cost related reasons)
