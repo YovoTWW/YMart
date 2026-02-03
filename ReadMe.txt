@@ -2,7 +2,7 @@ Overview :
 ASP .NET Web Application with a Microsoft Azure SQL Database showcasing a functioning online marketplace .
 
 Features:
-- Users that have created and logged in to their accounts have access to the shopping cart for placing products to buy (no payment methods are used , since this is a project for showcasing functionalities) . They can also view their order history in the User Orders page.
+- Users that have created (!!! You must click on the confirm e-mail button when registering) and logged in to their accounts have access to the shopping cart for placing products to buy (no payment methods are used , since this is a project for showcasing functionalities) . They can also view their order history in the User Orders page.
 - Users who are not logged in can still browse products and view their extended info on the Product Details page.
 - Search functionality for products is included with text search and category filters.
 - Home Page includes Brochure images , which when clicked , redirect to a new page with product offers.
@@ -16,7 +16,7 @@ Prerequisites for running the project locally:
 - (Optional) Docker and Docker Desktop
 
 Running the app after installation :
-- After pulling the project from GitHub, make sure you are connected to your local MS SQL Server instance . Open the Package Manager Console again and write "update-database". After that you should have a working web app with a database with automatically seeded data . If you wish to fill the database with more data , you can do it manually through SQL or register as admin@gmail.com (!!! You must click on the confirm e-mail button when registering , if you do not you might have to change the name of the admin e-mail through a line of code) and have admin privileges (you can change the admin e-mail by editing this line in Program.cs :"string email = "admin@gmail.com";"). You might get an error related to user roles when launching the app for the 1st time or not see the links to the admin only pages on the top left corner of the site , just launch it again and log out and log in and it should work.
+- After pulling the project from GitHub, make sure you are connected to your local MS SQL Server instance . Open the Package Manager Console and write "update-database". After that you should have a working web app with a database with automatically seeded data . If you wish to fill the database with more data , you can do it manually through SQL or register as admin@gmail.com (!!! You must click on the confirm e-mail button when registering , if you do not you might have to change the name of the admin e-mail through a line of code) and have admin privileges (you can change the admin e-mail by editing this line in Program.cs :"string email = "admin@gmail.com";"). You might get an error related to user roles when launching the app for the 1st time or not see the links to the admin only pages on the top left corner of the site , just launch it again and log out and log in and it should work.
 
 Notes for using an Azure Database:
 - (The Azure Database might be disabled for cost related reasons)
